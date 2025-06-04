@@ -1,0 +1,932 @@
+:root {
+    --primary-color: #7d6fff; /* Soft purple/blue */
+    --secondary-color: #b6aaff; /* Lighter purple/blue */
+    --accent-color: #7d6fff; /* Using primary for accents */
+    --background-color: #fdf4ee; /* Pastel pinkish/cream */
+    --text-color: #2d2d2d; /* Dark gray for text */
+    --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    --section-bg: #fdf4ee; /* Keep sections consistent for now */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    overflow-x: hidden;
+}
+
+/* Navigation */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem; /* Adjusted padding for a slightly smaller height */
+    z-index: 1000;
+    background: transparent;
+}
+
+.nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem; /* Increased size for the logo */
+    font-weight: 700; /* Bolder weight */
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: -0.02em; /* Match section title letter spacing */
+}
+
+.nav-links a {
+    margin-left: 1.5rem; /* Reduced space between links */
+    text-decoration: none; /* Remove default underline */
+    color: var(--primary-color); /* Set color to match section titles */
+    font-weight: 700; /* Match section title font weight */
+    font-size: 1.1rem; /* Set consistent font size */
+    text-transform: uppercase;
+    transition: color 0.3s var(--transition); /* Transition only color */
+    letter-spacing: -0.02em; /* Match section title letter spacing */
+    position: relative; /* Needed for underline pseudo-element */
+    display: inline-block; /* Needed for transform origin on pseudo-element */
+    padding-bottom: 5px; /* Add space for the underline */
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0; /* Position at the bottom of the link */
+    width: 100%;
+    height: 2px; /* Thickness of the underline */
+    background-color: var(--primary-color); /* Color of the underline (default) */
+    transform: scaleX(0); /* Start hidden */
+    transform-origin: bottom right; /* Animation origin */
+    transition: transform 0.3s var(--transition); /* Animate transform */
+}
+
+.nav-links a:hover {
+    color: var(--primary-color); /* Change text color to primary color on hover */
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1); /* Expand on hover */
+    transform-origin: bottom left; /* Animation origin */
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    padding: 6rem 2rem;
+    /* Remove max-width and margin to allow full width */
+    /* max-width: 1400px; */
+    margin: 0 auto; /* Remove auto margin */
+    position: relative;
+    flex-direction: column; /* Stack content vertically */
+    overflow: hidden; /* Hide overflowing SVG if necessary */
+}
+
+.hero-content {
+    flex: none; /* Prevent flex from taking up space */
+    padding: 0 2rem; /* Add horizontal padding to content */
+    max-width: 1400px; /* Add max-width to content for readability on very large screens */
+    width: 100%; /* Ensure it takes full width up to max-width */
+    margin: 0 auto; /* Center content block */
+    text-align: center; /* Center text content */
+    position: relative; /* Needed for z-index to work correctly */
+    z-index: 1; /* Ensure text is above SVG */
+}
+
+/* Styles for the name (h1) */
+.hero h1 {
+    font-size: 3rem; /* Match section title font size */
+    font-weight: 700; /* Match section title font weight */
+    margin-bottom: 1rem; /* Adjusted margin */
+    line-height: 1.2; /* Adjusted line height */
+    text-transform: uppercase;
+    color: var(--primary-color); /* Match section title color */
+    letter-spacing: -0.02em; /* Match section title letter spacing */
+    /* Ensure no glitch/outline/shadow from name */
+    text-shadow: none;
+    -webkit-text-stroke: none;
+    text-stroke: none;
+}
+
+/* Styles for Creative Developer (h2) - now with glitch effect */
+.hero h2 {
+    font-size: clamp(3.5rem, 16vw, 13rem); /* Make Creative Developer a bit smaller */
+    font-weight: 700; /* Bold weight for Creative Developer */
+    margin-bottom: 1.5rem; /* Space below Creative Developer */
+    line-height: 1; /* Keep line height for large text */
+    text-transform: uppercase;
+    letter-spacing: -0.06em; /* Make letters a bit closer */
+    color: #fff; /* Text color: white fill */
+    text-shadow:
+      0 10px 0 var(--secondary-color),
+      0 20px 30px rgba(182, 170, 255, 0.25); /* Adjusted shadow */
+    -webkit-text-stroke: 5px var(--primary-color); /* Slightly thinner outline */
+    text-stroke: 5px var(--primary-color); /* Slightly thinner outline */
+    overflow-wrap: break-word; /* Allow breaking long words if necessary */
+    word-break: break-word;
+    transition: text-shadow 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+}
+
+.hero h2:hover {
+    text-shadow:
+      0 12px 0 var(--primary-color), /* Change shadow color on hover */
+      0 24px 36px rgba(125, 111, 255, 0.3); /* Adjusted shadow color and spread */
+    transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+/* Hero Decoration SVG */
+.hero-decoration {
+    position: absolute;
+    z-index: 0; /* Ensure behind text (text container has z-index: 1) */
+    opacity: 0.8; /* Slightly more opaque */
+    pointer-events: none; /* Allow clicks to pass through */
+    stroke: var(--secondary-color); /* Use secondary color for stroke */
+    fill: var(--secondary-color); /* Use secondary color for fill for pixel graphic */
+    transition: transform 0.5s ease-in-out; /* Keep transition for potential hover effects */
+    animation: svgFloating 4s infinite ease-in-out alternate; /* Apply gentle floating animation to all */
+}
+
+/* Specific positioning and sizing for each small SVG */
+.hero-decoration.small {
+    width: 80px; /* Increased default size for small SVGs */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.hero-decoration.plant-pot {
+    top: 10%; /* Adjusted position */
+    left: 8%; /* Adjusted position */
+}
+
+.hero-decoration.pixel-cursor {
+    width: 50px; /* Specific size for pixel cursor */
+    height: 50px;
+    top: 30%; /* Adjusted position */
+    right: 10%; /* Adjusted position */
+}
+
+.hero-decoration.geometric {
+    top: 60%; /* Adjusted position */
+    left: 15%; /* Adjusted position */
+}
+
+.hero-decoration.computer {
+    width: 100px; /* Specific size for computer */
+    height: auto;
+    bottom: 5%; /* Position at bottom */
+    right: 20%; /* Adjusted position */
+}
+
+.hero-decoration.js-icon {
+    width: 70px; /* Specific size for JS icon */
+    height: auto;
+    top: 5%; /* Position at top */
+    right: 30%; /* Adjusted position */
+}
+
+/* Add new hover movement animation */
+@keyframes svgHoverMove {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(10px, -10px) rotate(5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Apply new movement animation on hero hover */
+.hero:hover .hero-decoration {
+    animation: svgHoverMove 1s ease-in-out infinite alternate; /* Apply movement animation */
+    /* The new animation property here overrides the default animation */
+}
+
+/* Keep the floating animation defined */
+@keyframes svgFloating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); } /* Increased float distance */
+    100% { transform: translateY(0); }
+}
+
+.hero-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center; /* Center buttons */
+}
+
+.button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: transparent; /* Transparent background */
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color); /* Border */
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    transition: var(--transition);
+}
+
+.button:hover {
+    background: var(--primary-color); /* Background on hover */
+    color: var(--background-color); /* Text color on hover */
+    border-color: var(--primary-color); /* Border color on hover */
+}
+
+.hero-image {
+    display: none; /* Hide the hero image div */
+}
+
+/* Sections */
+section {
+    padding: 8rem 2rem; /* Keep horizontal padding */
+    /* Remove max-width and margin to allow full width */
+    /* max-width: 1400px; */
+    margin: 0; /* Remove margin */
+    background: var(--section-bg); /* Background spans full width */
+}
+
+section > .section-content { /* Add a new inner div in HTML for content */
+    max-width: 1400px; /* Limit content width for readability */
+    margin: 0 auto; /* Center content block */
+}
+
+/* Adjusted to match the example's alternating background less strictly */
+/* section:nth-child(even) {
+    background: var(--background-color);
+} */
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--primary-color); /* Section title color */
+    /* text-align: left; */ /* Default alignment */
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: flex;
+    justify-content: center; /* Center the flex items (cards) */
+    align-items: center; /* Align items vertically in the center */
+    gap: 3rem; /* Keep increased space between cards */
+    padding: 2rem; /* Padding around the carousel area */
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.project-card {
+    flex: 0 0 auto;
+    width: 480px; /* Slightly larger fixed width for cards */
+    max-width: 95%; /* Ensure card doesn't exceed container width on small screens */
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+    /* Default state for non-active cards */
+    opacity: 0.5; /* Slightly more transparent */
+    transform: scale(0.9); /* Keep slightly smaller */
+    filter: blur(3px); /* Slightly more blur */
+}
+
+/* Active card style */
+.project-card.active {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    filter: blur(0);
+    z-index: 1; /* Ensure active card is on top */
+}
+
+/* Specific background colors for cards */
+.project-card.card-pink {
+    background-color: #fce4ec;
+}
+
+.project-card.card-cream {
+    background-color: #fff8e1; /* Light cream */
+}
+
+.project-card.card-purple {
+    background-color: #ede7f6; /* Light purple */
+}
+
+.project-card:hover {
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Carousel Navigation Arrows */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    pointer-events: none;
+}
+
+.nav-button {
+    background-color: rgba(125, 111, 255, 0.5); /* Lighter primary color with transparency */
+    color: var(--background-color); /* White text/icon color */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9; /* Slightly more opaque by default */
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color); /* Primary color on hover */
+    opacity: 1;
+}
+
+/* Card image frame */
+.card-image-frame {
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.card-image-container {
+    width: 100%;
+    /* height: 280px; /* Keep fixed height or use aspect ratio? */
+    aspect-ratio: 1 / 0.75; /* Maintain aspect ratio similar to screenshot */
+    overflow: hidden;
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the container */
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .card-image-container img {
+    transform: scale(1.1);
+}
+
+.card-text-content {
+    padding: 1.5rem; /* Padding for the text content */
+    text-align: center; /* Center text content */
+}
+
+.card-text-content h3 {
+    font-size: 1.8rem; /* Larger font size for title */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: var(--primary-color); /* Use primary color for title */
+    letter-spacing: 0.05em; /* Add some letter spacing */
+}
+
+.project-meta {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+.project-meta span {
+    margin: 0 0.4rem; /* Adjusted space between meta items */
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--primary-color); /* Use primary color for border */
+    border-radius: 4px;
+    font-weight: 500;
+    color: var(--primary-color); /* Use primary color for meta text */
+}
+
+/* Skills Section */
+.skills-section h2 {
+    text-align: center; /* Center the heading */
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.skill-category {
+    padding: 2rem;
+    background: var(--background-color);
+    border: 1px solid #eee;
+    transition: var(--transition);
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(50px); /* Initial state for slide-in */
+    display: flex; /* Use flexbox for vertical layout within category */
+    flex-direction: column;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.skill-category h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-color);
+}
+
+.skill-list {
+    list-style: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Allow the list to take up available space */
+    display: flex;
+    flex-direction: column; /* Stack skill items vertically */
+    gap: 0.8rem; /* Space between skill items */
+}
+
+.skill-item {
+    display: flex;
+    justify-content: space-between; /* Space out skill name and level */
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    border-bottom: 1px dashed #ccc; /* Add a subtle dashed line separator */
+    padding-bottom: 0.5rem; /* Space below the dashed line */
+    overflow: hidden; /* Hide overflowing content during animation */
+}
+
+.skill-item span:first-child { /* Style for the skill name */
+    flex-grow: 1; /* Allow skill name to take up available space */
+    margin-right: 1rem; /* Space between name and level */
+}
+
+.skill-level {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--secondary-color); /* Use secondary color for level */
+    opacity: 0; /* Start hidden */
+    transform: translateX(20px); /* Start slightly to the right */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Animation for revealing level */
+}
+
+.skill-item:hover .skill-level { /* Reveal level on hover */
+    opacity: 1; /* Full opacity */
+    transform: translateX(0); /* Slide to original position */
+}
+
+/* Contact Section */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 2rem;
+    background: var(--background-color);
+    border: 1px solid #eee;
+    transition: var(--transition);
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(50px); /* Initial state for slide-in */
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color); /* Border color on hover */
+    color: var(--primary-color); /* Text color on hover */
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+    text-align: left; /* Align text to the left */
+    padding: 4rem 2rem; /* Keep horizontal padding */
+    background: var(--background-color); /* Use background color variable */
+    border-top: 1px solid #eee; /* Subtle border top */
+    color: var(--text-color); /* Use text color variable */
+}
+
+.footer-container {
+    /* Remove max-width and margin to allow full width background */
+    /* max-width: 1400px; */
+    margin: 0; /* Remove auto margin to allow full width */
+    display: flex;
+    justify-content: space-between; /* Space out left and right columns */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 4rem; /* Gap between columns */
+}
+
+.footer-left {
+    flex: 1; /* Allow left side to grow */
+    min-width: 300px; /* Minimum width for left column */
+}
+
+.footer-name {
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 1; /* Reduce vertical space between lines */
+}
+
+.footer-details {
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.footer-details p {
+    margin-bottom: 0.5rem;
+}
+
+.footer-details strong {
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1.5rem; /* Space between social icons */
+    font-size: 1.2rem;
+}
+
+.footer-socials a {
+    color: var(--text-color);
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.footer-socials a:hover {
+    color: var(--primary-color); /* Change color on hover */
+}
+
+.footer-right {
+    flex: 1; /* Allow right side to grow */
+    min-width: 300px; /* Minimum width for right column */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+    text-align: right; /* Align text to the right */
+    justify-content: space-between; /* Space out content vertically */
+}
+
+.footer-availability {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.footer-contact {
+    margin-bottom: 2rem;
+}
+
+.footer-contact p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+.footer-contact a {
+    font-size: 1rem;
+    color: var(--primary-color); /* Primary color for email link */
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-contact a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.footer-copyright {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* Responsive adjustments for footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Stack columns vertically */
+        gap: 2rem; /* Reduced gap when stacked */
+    }
+
+    .footer-left,
+    .footer-right {
+        min-width: unset; /* Remove minimum width */
+        align-items: center; /* Center content when stacked */
+        text-align: center; /* Center text when stacked */
+    }
+
+    .footer-socials {
+        justify-content: center; /* Center social icons when stacked */
+    }
+
+    .footer-name {
+        font-size: 2rem;
+    }
+
+    .footer-details,
+    .footer-availability,
+    .footer-contact,
+    .footer-copyright {
+        font-size: 1rem;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 4rem; /* Reduced padding top for smaller devices */
+    }
+
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 2rem; /* Slightly reduced margin below content */
+    }
+
+    .hero-links {
+        justify-content: center;
+        gap: 0.5rem; /* Reduce gap between buttons */
+    }
+
+    .glitch-text { /* Styles for h1 (name) on smaller screens */
+        font-size: 2rem; /* Smaller font size for name */
+        margin-bottom: 0.5rem; /* Reduce margin below name */
+    }
+
+    .hero h2 { /* Responsive styles for Creative Developer */
+        font-size: clamp(2.5rem, 10vw, 5rem); /* Smaller font size for smaller screens */
+        letter-spacing: -0.02em; /* Adjusted letter spacing */
+        text-shadow:
+            0 4px 0 var(--secondary-color),
+            0 8px 12px rgba(182, 170, 255, 0.2);
+        -webkit-text-stroke: 3px var(--primary-color);
+        text-stroke: 3px var(--primary-color);
+    }
+    
+    .hero-links .button { /* Styles for buttons in hero on smaller screens */
+        padding: 0.6rem 1.2rem; /* Reduce button padding */
+        font-size: 0.8rem; /* Reduce button font size */
+    }
+
+    .nav-links {
+        display: none;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+         grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Scroll-driven animations */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.project-card, .skill-category, .contact-item {
+    opacity: 0;
+}
+
+.project-card.visible {
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.skill-category.visible, .contact-item.visible {
+    animation: slideInUp 0.8s ease-out forwards;
+}
+
+/* Glitch span for text scramble effect */
+.glitch-text span.glitch {
+    color: var(--secondary-color);
+}
+
+/* Style for the Projects section heading */
+.projects-section h2 {
+    text-align: center; /* Center the heading */
+}
+
+/* Style for the Skills section heading */
+.skills-section h2 {
+    text-align: center; /* Center the heading */
+}
+
+/* Contact Page Styles */
+.contact-page-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2rem;
+    background-color: #fdf4ee; /* Light background color from the example */
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 4rem; /* Space between text content and illustrations */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.contact-content {
+    flex: 1; /* Allow text content to take up available space */
+    min-width: 300px; /* Minimum width for text content */
+}
+
+.contact-illustrations {
+    position: relative; /* Set container for absolute positioning */
+    flex: 1; /* Allow illustrations placeholder to take up available space */
+    min-width: 300px; /* Minimum width for illustrations */
+    height: 400px; /* Keep placeholder height for layout */
+}
+
+.contact-illustrations .illustration {
+    position: absolute; /* Allow positioning relative to the container */
+    width: 50%; /* Adjust size as needed */
+    height: auto;
+    z-index: 1; /* Ensure images are above background */
+}
+
+.contact-illustrations .girl {
+    top: 0; /* Position at the top */
+    left: 0; /* Position at the left */
+    transform: translate(-20%, -20%); /* Adjust position slightly outside the container */
+    width: 60%; /* Make the girl image a bit larger */
+}
+
+.contact-illustrations .boy {
+    bottom: 0; /* Position at the bottom */
+    right: 0; /* Position at the right */
+    transform: translate(20%, 20%); /* Adjust position slightly outside the container */
+    width: 70%; /* Make the boy image a bit larger */
+}
+
+.contact-content h2 {
+    font-size: 3.5rem; /* Adjust font size */
+    font-weight: 700;
+    margin-bottom: 1.5rem; /* Adjust bottom margin */
+    text-transform: uppercase;
+    letter-spacing: -0.02em; /* Reduce letter spacing */
+    color: #e74a75; /* Pink/Coral color from illustration */
+    text-align: left; /* Align heading to the left */
+    line-height: 1.1; /* Reduce vertical space between lines */
+}
+
+.contact-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #2d2d2d; /* Dark text color */
+}
+
+.contact-email-link {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e74a75; /* Pink/Coral color from illustration */
+    text-decoration: underline; /* Underline the link */
+    transition: color 0.3s ease;
+}
+
+.contact-email-link:hover {
+    color: #b6aaff; /* Use a purple hover color */
+}
+
+/* Contact Page Specific Styles */
+/* Navigation links on Contact Page */
+.contact-page .main-nav .nav-links a {
+    color: #e74a75; /* Match the 'WORK TOGETHER?' heading color */
+    font-weight: 700; /* Match heading font weight */
+    text-transform: uppercase; /* Match heading text transform */
+    letter-spacing: -0.02em; /* Match heading letter spacing */
+    line-height: 1.1; /* Match heading line height */
+}
+
+.contact-page .main-nav .nav-links a:hover {
+}
+
+/* Navigation link underline on hover on Contact Page */
+.contact-page .nav-links a:hover::after {
+    background-color: #e74a75; /* Match contact page heading color for underline */
+}
+
+/* Footer name on Contact Page */
+.contact-page .footer-name {
+    color: #e74a75; /* Match the 'WORK TOGETHER?' heading color */
+    font-weight: 700; /* Match heading font weight */
+    text-transform: uppercase; /* Match heading text transform */
+    letter-spacing: -0.02em; /* Match heading letter spacing */
+    font-size: clamp(2rem, 8vw, 4rem); /* Adjust font size for footer name */
+    line-height: 1.1; /* Match heading line height */
+}
+
+/* Footer contact email link on Contact Page */
+.contact-page .footer-contact a {
+    color: #e74a75; /* Match the 'WORK TOGETHER?' heading color */
+    font-weight: 700; /* Match heading font weight */
+    /* text-transform: uppercase;  Decided not to uppercase the email address */
+    /* letter-spacing: -0.02em; Decided not to change letter spacing for email */
+    font-size: 1.2rem; /* Slightly increase font size for email link */
+}
+
+.contact-page .footer-contact a:hover {
+    color: #b6aaff; /* Use a different color on hover, perhaps secondary */
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+}
