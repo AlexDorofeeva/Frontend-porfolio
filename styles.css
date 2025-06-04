@@ -49,17 +49,17 @@ body {
 }
 
 .nav-links a {
-    margin-left: 1.5rem; /* Reduced space between links */
-    text-decoration: none; /* Remove default underline */
-    color: var(--primary-color); /* Set color to match section titles */
-    font-weight: 700; /* Match section title font weight */
-    font-size: 1.1rem; /* Set consistent font size */
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 800; /* Increased from 700 to 800 for bolder text */
+    font-size: 1.3rem; /* Increased from 1.1rem to 1.3rem for bigger text */
     text-transform: uppercase;
-    transition: color 0.3s var(--transition); /* Transition only color */
-    letter-spacing: -0.02em; /* Match section title letter spacing */
-    position: relative; /* Needed for underline pseudo-element */
-    display: inline-block; /* Needed for transform origin on pseudo-element */
-    padding-bottom: 5px; /* Add space for the underline */
+    transition: color 0.3s var(--transition);
+    letter-spacing: -0.02em;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 .nav-links a::after {
@@ -842,35 +842,36 @@ section {
 }
 
 .contact-illustrations .girl {
-    top: 0; /* Position at the top */
-    left: 0; /* Position at the left */
-    transform: translate(-20%, -20%); /* Adjust position slightly outside the container */
-    width: 60%; /* Make the girl image a bit larger */
+    top: 0;
+    left: 0;
+    transform: translate(-20%, -20%);
+    width: 60%;
 }
 
 .contact-illustrations .boy {
-    bottom: 0; /* Position at the bottom */
-    right: 0; /* Position at the right */
-    transform: translate(20%, 20%); /* Adjust position slightly outside the container */
-    width: 70%; /* Make the boy image a bit larger */
+    bottom: -40%; /* Move boy even lower */
+    right: 0;
+    transform: translate(20%, 20%);
+    width: 70%;
 }
 
 .contact-content h2 {
-    font-size: 3.5rem; /* Adjust font size */
+    font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem; /* Adjust bottom margin */
+    margin-bottom: 3rem; /* Increased from 1.5rem to 3rem for more separation */
     text-transform: uppercase;
-    letter-spacing: -0.02em; /* Reduce letter spacing */
-    color: #e74a75; /* Pink/Coral color from illustration */
-    text-align: left; /* Align heading to the left */
-    line-height: 1.1; /* Reduce vertical space between lines */
+    letter-spacing: -0.02em;
+    color: #e74a75;
+    text-align: left;
+    line-height: 1.1;
 }
 
 .contact-content p {
     font-size: 1rem;
     line-height: 1.8;
     margin-bottom: 1.5rem;
-    color: #2d2d2d; /* Dark text color */
+    color: #2d2d2d;
+    margin-top: 2rem; /* Added top margin to create more space */
 }
 
 .contact-email-link {
@@ -888,11 +889,12 @@ section {
 /* Contact Page Specific Styles */
 /* Navigation links on Contact Page */
 .contact-page .main-nav .nav-links a {
-    color: #e74a75; /* Match the 'WORK TOGETHER?' heading color */
-    font-weight: 700; /* Match heading font weight */
-    text-transform: uppercase; /* Match heading text transform */
-    letter-spacing: -0.02em; /* Match heading letter spacing */
-    line-height: 1.1; /* Match heading line height */
+    color: #e74a75;
+    font-weight: 800; /* Match the increased weight */
+    font-size: 1.3rem; /* Match the increased size */
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
 }
 
 .contact-page .main-nav .nav-links a:hover {
