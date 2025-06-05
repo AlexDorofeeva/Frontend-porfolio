@@ -858,12 +858,13 @@ section {
 .contact-content h2 {
     font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 3rem; /* Increased from 1.5rem to 3rem for more separation */
+    margin-bottom: 2rem; /* Reduced from 3rem to 2rem */
     text-transform: uppercase;
     letter-spacing: -0.02em;
     color: #e74a75;
     text-align: left;
     line-height: 1.1;
+    margin-top: 0; /* Added to ensure no top margin */
 }
 
 .contact-content p {
@@ -871,7 +872,7 @@ section {
     line-height: 1.8;
     margin-bottom: 1.5rem;
     color: #2d2d2d;
-    margin-top: 2rem; /* Added top margin to create more space */
+    margin-top: 0; /* Changed from 2rem to 0 */
 }
 
 .contact-email-link {
