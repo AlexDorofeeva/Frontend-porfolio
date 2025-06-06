@@ -6,6 +6,22 @@
     --text-color: #2d2d2d; /* Dark gray for text */
     --transition: all 0.3s cubic-bezier(.4,0,.2,1);
     --section-bg: #fdf4ee; /* Keep sections consistent for now */
+    --card-background-dark: #6b5ac8; /* Darker purple for cards */
+    --card-background-pink: #e74a75; /* Pink for contact card */
+    --card-background-light-pink: #fdf4ee; /* Light pink for contact hero */
+    --footer-background: #333;
+    --footer-text-color: #fff;
+}
+
+/* Illustrations Page Colors */
+.illustrations-page {
+    --page-primary-color: #50b3d1; /* Bright blue */
+    --page-secondary-color: #8de0f1; /* Lighter blue */
+    --page-text-color: #3a3a3a; /* Dark gray */
+    --page-background-color: #e8f5f8; /* Very light blue background */
+    --block-color-1: #50b3d1; /* Blue */
+    --block-color-2: #8de0f1; /* Lighter blue */
+    --block-color-3: #3a3a3a; /* Dark gray */
 }
 
 * {
@@ -321,7 +337,7 @@ h2 {
 
 /* Specific background colors for cards */
 .project-card.card-pink {
-    background-color: #fce4ec;
+    background-color: #fce4ec; /* Keep default pink background */
 }
 
 .project-card.card-cream {
@@ -826,7 +842,7 @@ section {
     display: flex;
     align-items: center;
     padding: 8rem 2rem;
-    background-color: #fdf4ee; /* Light background color from the example */
+    background-color: var(--card-background-light-pink);
     max-width: 1400px;
     margin: 0 auto;
     gap: 4rem; /* Space between text content and illustrations */
@@ -1067,4 +1083,160 @@ section {
         width: 100%;
         max-width: 300px;
     }
+}
+
+/* Illustrations Page Specific Styles */
+.illustrations-hero {
+    background-color: var(--background-color); /* Use consistent background color */
+    padding: 6rem 2rem; /* Adjust padding as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.illustrations-content {
+    text-align: center;
+    max-width: 800px;
+}
+
+.illustrations-content h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--page-primary-color); /* Use illustrations page primary color */
+    line-height: 1.1;
+}
+
+.illustrations-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: var(--page-text-color); /* Use illustrations page text color */
+}
+
+/* Illustrations Grid Section */
+.illustrations-grid-section {
+    padding: 4rem 2rem;
+    background-color: var(--background-color); /* Use default background or a variation */
+}
+
+.illustrations-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.illustration-block {
+    background-color: #fff; /* Default block background */
+    padding: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.illustration-block img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.illustration-block p {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* Random Sizes for Blocks (Example) */
+.illustration-block.size-small {
+    grid-column: span 1; /* Take up 1 column */
+    grid-row: span 1; /* Take up 1 row */
+}
+
+.illustration-block.size-medium {
+    grid-column: span 1; /* Take up 1 column */
+    grid-row: span 2; /* Take up 2 rows */
+}
+
+.illustration-block.size-large {
+    grid-column: span 2; /* Take up 2 columns */
+    grid-row: span 2; /* Take up 2 rows */
+}
+
+/* Block Colors */
+.illustration-block.color-1 {
+    background-color: var(--block-color-1);
+    color: #fff; /* White text for darker background */
+}
+
+.illustration-block.color-1 p {
+     color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+}
+
+.illustration-block.color-2 {
+    background-color: var(--block-color-2);
+     color: var(--page-text-color);
+}
+
+.illustration-block.color-3 {
+    background-color: var(--block-color-3);
+    color: #fff; /* White text for darker background */
+}
+
+.illustration-block.color-3 p {
+     color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+}
+
+/* Navigation link color on Illustrations Page */
+.illustrations-page .main-nav .nav-links a {
+    color: var(--page-primary-color); /* Use illustrations page primary color */
+}
+
+.illustrations-page .main-nav .nav-links a:hover {
+     color: var(--page-secondary-color); /* Use illustrations page secondary color on hover */
+}
+
+/* Navigation link underline on hover on Illustrations Page */
+.illustrations-page .nav-links a:hover::after {
+    background-color: var(--page-primary-color); /* Match illustrations page primary color for underline */
+}
+
+/* Footer links on Illustrations Page */
+.illustrations-page .footer a {
+    color: var(--page-primary-color); /* Use illustrations page primary color for footer links */
+}
+
+.illustrations-page .footer a:hover {
+    color: var(--page-secondary-color); /* Use illustrations page secondary color on hover */
+}
+
+/* Footer name on Illustrations Page */
+.illustrations-page .footer-name {
+    color: var(--page-primary-color); /* Use illustrations page primary color */
+}
+
+/* Project Card 1 - Pink Background */
+.project-card.card-pink {
+    background-color: #fce4ec; /* Keep default pink background */
+}
+
+/* Illustrations Color Scheme for Project Card */
+.project-card.illustrations-color-scheme {
+    background-color: #e8f5f8; /* Use the light blue background color from illustrations page */
+}
+
+.project-card.illustrations-color-scheme .card-text-content h3 {
+    color: #50b3d1; /* Use the blue primary color */
+}
+
+.project-card.illustrations-color-scheme .project-meta span {
+    border-color: #50b3d1; /* Use the blue primary color */
+    color: #50b3d1; /* Use the blue primary color */
+}
+
+.project-card.card-cream {
+    background-color: #fff8e1; /* Light cream */
 }
