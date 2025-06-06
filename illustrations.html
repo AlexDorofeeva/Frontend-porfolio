@@ -30,23 +30,47 @@
                 <!-- Illustration blocks will go here -->
                 <!-- Top Row - Two blocks -->
                 <div class="illustration-block size-small color-1">
-                    <img src="./photo/parents-mood-maker.png" alt="Parent's Mood Maker Illustration">
-                    <p>An illustration from the Parent's Mood Maker project. [Add your description here]</p>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="./photo/parents-mood-maker.png" alt="Parent's Mood Maker Illustration">
+                        </div>
+                        <div class="card-back color-1-back">
+                            <p>An illustration from the Parent's Mood Maker project. [Add your description here]</p>
+                        </div>
+                    </div>
                 </div>
                 <!-- Block 2: Same height as Block 1, different width -->
                 <div class="illustration-block size-small color-2">
-                    <img src="./photo/abstract-illustration.png" alt="Abstract Illustration with Color Palette">
-                    <p>An abstract illustration showcasing a specific color palette and geometric shapes. [Add your description here]</p>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="./photo/abstract-illustration.png" alt="Abstract Illustration with Color Palette">
+                        </div>
+                        <div class="card-back color-2-back">
+                            <p>An abstract illustration showcasing a specific color palette and geometric shapes. [Add your description here]</p>
+                        </div>
+                    </div>
                 </div>
                 <!-- Bottom Row - Two blocks -->
                 <div class="illustration-block size-medium color-3">
-                    <img src="./photo/gift-box-illustration.png" alt="Isometric Communication Illustration">
-                    <p>An isometric illustration featuring communication and digital interaction concepts. [Add your description here]</p>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="./photo/gift-box-illustration.png" alt="Gift Box Illustration">
+                        </div>
+                        <div class="card-back color-3-back">
+                            <p>An illustration of a gift box opening to reveal a landscape inside. [Add your description here]</p>
+                        </div>
+                    </div>
                 </div>
                 <!-- Block 4: Larger than Block 3 -->
                 <div class="illustration-block size-medium color-1">
-                    <img src="#" alt="Illustration 4 Placeholder">
-                    <p>Description for Illustration 4.</p>
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="#" alt="Illustration 4 Placeholder">
+                        </div>
+                        <div class="card-back color-1-back">
+                            <p>Description for Illustration 4.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -63,5 +87,24 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.illustration-block');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // First, flip back any previously flipped card
+                    const previouslyFlipped = document.querySelector('.illustration-block.is-flipped');
+                    if (previouslyFlipped && previouslyFlipped !== this) {
+                        previouslyFlipped.classList.remove('is-flipped');
+                    }
+                    
+                    // Then toggle the clicked card
+                    this.classList.toggle('is-flipped');
+                });
+            });
+        });
+    </script>
 </body>
 </html> 

@@ -406,7 +406,7 @@ h2 {
 
 .card-image-container img {
     width: 100%;
-    height: 100%;
+    height: 100%; /* Ensure image tries to fill the height of its container */
     object-fit: cover; /* Cover the container */
     transition: transform 0.3s ease;
 }
@@ -1095,7 +1095,7 @@ section {
 }
 
 .illustrations-content {
-    text-align: center;
+        text-align: center;
     max-width: 800px;
 }
 
@@ -1119,92 +1119,80 @@ section {
 /* Illustrations Grid Section */
 .illustrations-grid-section {
     padding: 4rem 2rem;
-    background-color: var(--background-color); /* Use default background or a variation */
+    background-color: var(--background-color);
 }
 
 .illustrations-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Use auto-fit for better filling */
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
     gap: 20px;
-    grid-auto-rows: auto; /* Allow rows to size based on content */
-    max-width: 1200px; /* Set a maximum width for the grid container */
-    margin: 0 auto; /* Center the grid container */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .illustration-block {
-    background-color: #fff; /* Default block background */
-    padding: 1rem;
+    background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    /* Ensure blocks don't have explicit heights that break grid flow */
-    height: auto; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    aspect-ratio: 1; /* Make blocks square by default */
 }
 
-.illustration-block img {
+.illustration-block:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-inner {
+    position: absolute;
     width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    object-fit: cover; /* Ensure image covers the space */
-    flex-grow: 1; /* Allow image to grow within flex container */
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 }
 
-.illustration-block p {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    line-height: 1.5;
-    flex-shrink: 0; /* Prevent text from shrinking */
+.illustration-block.is-flipped .card-inner {
+    transform: rotateY(180deg);
 }
 
-/* Random Sizes for Blocks */
-.illustration-block.size-small {
-    grid-column: span 1; /* Take up 1 column */
-    grid-row: span 1; /* Take up 1 row */
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
 
-.illustration-block.size-medium {
-    grid-column: span 1; /* Take up 1 column */
-    grid-row: span 2; /* Take up 2 rows */
+.card-front {
+    background-color: transparent;
+    transform: rotateY(0deg); /* Ensure front stays at 0 degrees */
 }
 
-.illustration-block.size-large {
-    grid-column: span 2; /* Take up 2 columns */
-    grid-row: span 2; /* Take up 2 rows */
+.card-back {
+    background-color: var(--page-secondary-color);
+    transform: rotateY(180deg);
 }
 
-/* Add more size/span variations for a more random look */
-.illustration-block.size-wide {
-    grid-column: span 2; /* Span 2 columns */
-    grid-row: span 1;    /* Span 1 row */
-}
-
-.illustration-block.size-tall {
-    grid-column: span 1; /* Span 1 column */
-    grid-row: span 3;    /* Span 3 rows */
-}
-
-.illustration-block.size-square-large {
-    grid-column: span 2; /* Span 2 columns */
-    grid-row: span 2;    /* Span 2 rows */
-}
-
-/* Block Colors */
+/* Front side colors */
 .illustration-block.color-1 {
     background-color: var(--block-color-1);
     color: #fff; /* White text for darker background */
 }
 
 .illustration-block.color-1 p {
-     color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
 }
 
 .illustration-block.color-2 {
     background-color: var(--block-color-2);
-     color: var(--page-text-color);
+    color: var(--page-text-color);
 }
 
 .illustration-block.color-3 {
@@ -1213,75 +1201,67 @@ section {
 }
 
 .illustration-block.color-3 p {
-     color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
 }
 
-/* Navigation link color on Illustrations Page */
-.illustrations-page .main-nav .nav-links a {
-    color: var(--page-primary-color); /* Use illustrations page primary color */
+/* Back side colors */
+.illustration-block .card-back.color-1-back {
+    background-color: var(--block-color-1); /* Blue */
+    color: #fff; /* White text */
 }
 
-.illustrations-page .main-nav .nav-links a:hover {
-     color: var(--page-secondary-color); /* Use illustrations page secondary color on hover */
+.illustration-block .card-back.color-1-back p {
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
 }
 
-/* Navigation link underline on hover on Illustrations Page */
-.illustrations-page .nav-links a:hover::after {
-    background-color: var(--page-primary-color); /* Match illustrations page primary color for underline */
+.illustration-block .card-back.color-2-back {
+    background-color: var(--block-color-2); /* Lighter blue */
+    color: var(--page-text-color); /* Dark gray text */
 }
 
-/* Footer links on Illustrations Page */
-.illustrations-page .footer a {
-    color: var(--page-primary-color); /* Use illustrations page primary color for footer links */
+.illustration-block .card-back.color-3-back {
+    background-color: var(--block-color-3); /* Dark gray */
+    color: #fff; /* White text */
 }
 
-.illustrations-page .footer a:hover {
-    color: var(--page-secondary-color); /* Use illustrations page secondary color on hover */
+.illustration-block .card-back.color-3-back p {
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
 }
 
-/* Footer name on Illustrations Page */
-.illustrations-page .footer-name {
-    color: var(--page-primary-color); /* Use illustrations page primary color */
+.illustration-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    transform-style: preserve-3d; /* Keep image in 3D space */
+    transform: translateZ(0); /* Keep image at front */
 }
 
-/* Project Card 1 - Pink Background */
-.project-card.card-pink {
-    background-color: #fce4ec; /* Keep default pink background */
+/* Size variations */
+.illustration-block.size-small {
+    aspect-ratio: 1;
 }
 
-/* Illustrations Color Scheme for Project Card */
-.project-card.illustrations-color-scheme {
-    background-color: #e8f5f8; /* Use the light blue background color from illustrations page */
+.illustration-block.size-medium {
+    aspect-ratio: 1/2;
 }
 
-.project-card.illustrations-color-scheme .card-text-content h3 {
-    color: #50b3d1; /* Use the blue primary color */
+.illustration-block.size-large {
+    aspect-ratio: 2/2;
 }
 
-.project-card.illustrations-color-scheme .project-meta span {
-    border-color: #50b3d1; /* Use the blue primary color */
-    color: #50b3d1; /* Use the blue primary color */
+.illustration-block.size-wide {
+    aspect-ratio: 2/1;
 }
 
-.project-card.card-cream {
-    background-color: #fff8e1; /* Light cream */
-}
-
-/* Responsive adjustments for grid */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .illustrations-grid-container {
-        grid-template-columns: 1fr; /* Single column layout on small screens */
-        grid-auto-rows: auto; /* Auto row height */
+        grid-template-columns: 1fr;
     }
-
-    .illustration-block.size-small,
-    .illustration-block.size-medium,
-    .illustration-block.size-large,
-    .illustration-block.size-wide,
-    .illustration-block.size-tall,
-    .illustration-block.size-square-large {
-        grid-column: span 1 !important; /* Ensure all blocks span 1 column */
-        grid-row: span 1 !important;    /* Ensure all blocks span 1 row */
+    
+    .illustration-block {
+        aspect-ratio: 1; /* Make all blocks square on mobile */
     }
 }
 
