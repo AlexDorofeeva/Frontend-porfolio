@@ -683,14 +683,14 @@ h2 {
     }
 
     .footer-name {
-        font-size: 2rem;
-    }
+    font-size: 2rem;
+}
 
     .footer-details,
     .footer-availability,
     .footer-contact,
     .footer-copyright {
-        font-size: 1rem;
+    font-size: 1rem;
     }
 }
 
@@ -864,7 +864,7 @@ section {
 .contact-illustrations .illustration {
     position: absolute; /* Allow positioning relative to the container */
     width: 50%; /* Adjust size as needed */
-    height: auto;
+        height: auto;
     z-index: 1; /* Ensure images are above background */
 }
 
@@ -1067,7 +1067,7 @@ section {
     }
 
     .error-content h2 {
-        font-size: 2rem;
+    font-size: 2rem;
     }
 
     .error-content p {
@@ -1124,8 +1124,11 @@ section {
 
 .illustrations-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Use auto-fit for better filling */
     gap: 20px;
+    grid-auto-rows: auto; /* Allow rows to size based on content */
+    max-width: 1200px; /* Set a maximum width for the grid container */
+    margin: 0 auto; /* Center the grid container */
 }
 
 .illustration-block {
@@ -1134,6 +1137,10 @@ section {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    /* Ensure blocks don't have explicit heights that break grid flow */
+    height: auto; 
 }
 
 .illustration-block img {
@@ -1142,15 +1149,18 @@ section {
     display: block;
     margin-bottom: 1rem;
     border-radius: 4px;
+    object-fit: cover; /* Ensure image covers the space */
+    flex-grow: 1; /* Allow image to grow within flex container */
 }
 
 .illustration-block p {
     font-size: 0.9rem;
     color: var(--text-color);
     line-height: 1.5;
+    flex-shrink: 0; /* Prevent text from shrinking */
 }
 
-/* Random Sizes for Blocks (Example) */
+/* Random Sizes for Blocks */
 .illustration-block.size-small {
     grid-column: span 1; /* Take up 1 column */
     grid-row: span 1; /* Take up 1 row */
@@ -1164,6 +1174,22 @@ section {
 .illustration-block.size-large {
     grid-column: span 2; /* Take up 2 columns */
     grid-row: span 2; /* Take up 2 rows */
+}
+
+/* Add more size/span variations for a more random look */
+.illustration-block.size-wide {
+    grid-column: span 2; /* Span 2 columns */
+    grid-row: span 1;    /* Span 1 row */
+}
+
+.illustration-block.size-tall {
+    grid-column: span 1; /* Span 1 column */
+    grid-row: span 3;    /* Span 3 rows */
+}
+
+.illustration-block.size-square-large {
+    grid-column: span 2; /* Span 2 columns */
+    grid-row: span 2;    /* Span 2 rows */
 }
 
 /* Block Colors */
@@ -1239,4 +1265,29 @@ section {
 
 .project-card.card-cream {
     background-color: #fff8e1; /* Light cream */
+}
+
+/* Responsive adjustments for grid */
+@media (max-width: 768px) {
+    .illustrations-grid-container {
+        grid-template-columns: 1fr; /* Single column layout on small screens */
+        grid-auto-rows: auto; /* Auto row height */
+    }
+
+    .illustration-block.size-small,
+    .illustration-block.size-medium,
+    .illustration-block.size-large,
+    .illustration-block.size-wide,
+    .illustration-block.size-tall,
+    .illustration-block.size-square-large {
+        grid-column: span 1 !important; /* Ensure all blocks span 1 column */
+        grid-row: span 1 !important;    /* Ensure all blocks span 1 row */
+    }
+}
+
+/* Two-column layout for larger screens */
+@media (min-width: 769px) {
+    .illustrations-grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Explicitly create two equal columns */
+    }
 }
