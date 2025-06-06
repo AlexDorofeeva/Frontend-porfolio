@@ -280,20 +280,20 @@ h2 {
 
 /* Projects Grid */
 .projects-grid {
-    display: flex;
-    justify-content: center; /* Center the flex items (cards) */
-    align-items: center; /* Align items vertically in the center */
-    gap: 3rem; /* Keep increased space between cards */
-    padding: 2rem; /* Padding around the carousel area */
-    overflow-x: hidden;
-    width: 100%;
+    display: grid; /* Ensure it's a grid */
+    justify-content: center; /* Center grid items (cards) */
+    align-items: center; /* Align items vertically */
+    gap: 3rem; /* Space between cards */
+    padding: 2rem; /* Padding around the grid */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    width: 100%; /* Take full width */
     position: relative;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
 }
 
 .project-card {
-    flex: 0 0 auto;
-    width: 480px; /* Slightly larger fixed width for cards */
-    max-width: 95%; /* Ensure card doesn't exceed container width on small screens */
+    width: 100%; /* Ensure card takes full width of grid column */
+    max-width: 100%; /* Ensure card doesn't exceed container width */
     position: relative;
     border-radius: 15px;
     overflow: hidden;
@@ -681,7 +681,11 @@ h2 {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .projects-grid {
-        grid-template-columns: 1fr;
+        display: flex; /* Change to flex for horizontal layout */
+        gap: 1rem; /* Adjust gap for smaller screens if needed */
+        overflow-x: auto; /* Add horizontal scrolling */
+        scroll-snap-type: x mandatory; /* Optional: Add scroll snapping */
+        padding-bottom: 1rem; /* Add some padding for scrollbar */
     }
     
     .skills-grid {
@@ -690,6 +694,13 @@ h2 {
     
     .contact-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .project-card {
+        flex: 0 0 auto; /* Prevent shrinking/growing, base on content */
+        width: 80%; /* Set a percentage width for cards on smaller screens */
+        max-width: 350px; /* Set a maximum width */
+        scroll-snap-align: center; /* Optional: Snap cards to center */
     }
 }
 
