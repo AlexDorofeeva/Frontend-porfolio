@@ -10,6 +10,7 @@
 <body class="illustrations-page">
     <nav class="main-nav">
         <div class="nav-content">
+            <div class="hamburger"><span></span><span></span><span></span></div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="contact.html">Contact</a>
@@ -27,48 +28,53 @@
 
         <section class="illustrations-grid-section">
             <div class="illustrations-grid-container">
-                <!-- Illustration blocks will go here -->
-                <!-- Top Row - Two blocks -->
-                <div class="illustration-block size-small color-1">
+                <div class="illustration-block size-large color-1">
                     <div class="card-inner">
                         <div class="card-front">
                             <img src="./photo/parents-mood-maker.png" alt="Parent's Mood Maker Illustration">
                         </div>
                         <div class="card-back color-1-back">
-                            <p>An illustration from the Parent's Mood Maker project. [Add your description here]</p>
+                            <p>An illustration from the Parent's Mood Maker project.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Block 2: Same height as Block 1, different width -->
                 <div class="illustration-block size-small color-2">
                     <div class="card-inner">
                         <div class="card-front">
                             <img src="./photo/abstract-illustration.png" alt="Abstract Illustration with Color Palette">
                         </div>
                         <div class="card-back color-2-back">
-                            <p>An abstract illustration showcasing a specific color palette and geometric shapes. [Add your description here]</p>
+                            <p>An abstract illustration showcasing a specific color palette and geometric shapes.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Bottom Row - Two blocks -->
                 <div class="illustration-block size-medium color-3">
                     <div class="card-inner">
                         <div class="card-front">
                             <img src="./photo/gift-box-illustration.png" alt="Gift Box Illustration">
                         </div>
                         <div class="card-back color-3-back">
-                            <p>An illustration of a gift box opening to reveal a landscape inside. [Add your description here]</p>
+                            <p>An illustration of a gift box opening to reveal a landscape inside.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Block 4: Larger than Block 3 -->
-                <div class="illustration-block size-medium color-1">
+                <div class="illustration-block size-wide color-1">
                     <div class="card-inner">
                         <div class="card-front">
-                            <img src="#" alt="Illustration 4 Placeholder">
+                            <img src="./photo/illustration4.png" alt="Wide Illustration">
                         </div>
                         <div class="card-back color-1-back">
-                            <p>Description for Illustration 4.</p>
+                            <p>Description for wide illustration.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="illustration-block size-small color-2">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="./photo/illustration5.png" alt="Small Illustration">
+                        </div>
+                        <div class="card-back color-2-back">
+                            <p>Description for small illustration.</p>
                         </div>
                     </div>
                 </div>
@@ -106,5 +112,18 @@
             });
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var hamburger = document.querySelector('.hamburger');
+      var navLinks = document.querySelector('.nav-links');
+      if (hamburger && navLinks) {
+        hamburger.onclick = function() {
+          navLinks.classList.toggle('show');
+          alert('Hamburger clicked!');
+        }
+      }
+    });
+    </script>
+    <script src="index.js"></script>
 </body>
 </html> 

@@ -11,9 +11,10 @@
 <body class="contact-page">
     <nav class="main-nav">
         <div class="nav-content">
+            <div class="hamburger"><span></span><span></span><span></span></div>
             <div class="nav-links">
-            <a href="index.html#projects">Projects</a>
-            <a href="index.html#skills">Skills</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#skills">Skills</a>
                 <a href="index.html">Home</a>
             </div>
         </div>
@@ -70,6 +71,17 @@
     </div>
 </footer>
 
-    <script src="index.js"></script> <!-- Will need to adjust JS later -->
+    <script src="index.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var hamburger = document.querySelector('.hamburger');
+      var navLinks = document.querySelector('.nav-links');
+      if (hamburger && navLinks) {
+        hamburger.onclick = function() {
+          navLinks.classList.toggle('show');
+        }
+      }
+    });
+    </script>
 </body>
 </html>

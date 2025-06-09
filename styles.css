@@ -296,43 +296,50 @@ h2 {
 
 /* Projects Grid */
 .projects-grid {
-    display: grid; /* Ensure it's a grid */
-    justify-content: center; /* Center grid items (cards) */
-    align-items: center; /* Align items vertically */
-    gap: 3rem; /* Space between cards */
-    padding: 2rem; /* Padding around the grid */
-    overflow-x: hidden; /* Hide horizontal overflow */
-    width: 100%; /* Take full width */
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 2rem;
+    overflow: visible;
+    width: 100%;
     position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .project-card {
-    width: 100%; /* Ensure card takes full width of grid column */
-    max-width: 100%; /* Ensure card doesn't exceed container width */
+    width: 100%;
+    max-width: 100%;
     position: relative;
     border-radius: 15px;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     margin: 0;
     display: flex;
     flex-direction: column;
-
-    /* Default state for non-active cards */
-    opacity: 0.5; /* Slightly more transparent */
-    transform: scale(0.9); /* Keep slightly smaller */
-    filter: blur(3px); /* Slightly more blur */
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 0.5;
+    transform: scale(0.95);
+    filter: blur(2px);
 }
 
-/* Active card style */
 .project-card.active {
     opacity: 1;
     transform: scale(1);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
     filter: blur(0);
-    z-index: 1; /* Ensure active card is on top */
+    z-index: 1;
+}
+
+.project-card:hover {
+    transform: scale(1.03);
+    z-index: 2;
+}
+.project-card:hover .card-image-container img {
+    transform: none;
 }
 
 /* Specific background colors for cards */
@@ -348,71 +355,30 @@ h2 {
     background-color: #ede7f6; /* Light purple */
 }
 
-.project-card:hover {
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
-    transform: scale(1.05);
-}
-
-/* Carousel Navigation Arrows */
-.carousel-nav {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
-    pointer-events: none;
-}
-
-.nav-button {
-    background-color: rgba(125, 111, 255, 0.5); /* Lighter primary color with transparency */
-    color: var(--background-color); /* White text/icon color */
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-    opacity: 0.9; /* Slightly more opaque by default */
-    pointer-events: auto;
-    z-index: 10;
-}
-
-.nav-button:hover {
-    background-color: var(--primary-color); /* Primary color on hover */
-    opacity: 1;
-}
-
-/* Card image frame */
 .card-image-frame {
     padding: 1.5rem;
     border-radius: 10px;
     margin: 1.5rem 1.5rem 0 1.5rem;
+    overflow: hidden;
 }
 
 .card-image-container {
     width: 100%;
-    /* height: 280px; /* Keep fixed height or use aspect ratio? */
-    aspect-ratio: 1 / 0.75; /* Maintain aspect ratio similar to screenshot */
+    aspect-ratio: 1 / 0.75;
     overflow: hidden;
-    border-radius: 8px; /* Rounded corners for the image */
+    border-radius: 8px;
+    position: relative;
 }
 
 .card-image-container img {
     width: 100%;
-    height: 100%; /* Ensure image tries to fill the height of its container */
-    object-fit: cover; /* Cover the container */
-    transition: transform 0.3s ease;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
 }
 
 .project-card:hover .card-image-container img {
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
 .card-text-content {
@@ -697,11 +663,14 @@ h2 {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .projects-grid {
-        display: flex; /* Change to flex for horizontal layout */
-        gap: 1rem; /* Adjust gap for smaller screens if needed */
-        overflow-x: auto; /* Add horizontal scrolling */
-        scroll-snap-type: x mandatory; /* Optional: Add scroll snapping */
-        padding-bottom: 1rem; /* Add some padding for scrollbar */
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+        gap: 1rem !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: visible !important;
+        padding: 1rem !important;
+        box-sizing: border-box;
     }
     
     .skills-grid {
@@ -713,10 +682,81 @@ h2 {
     }
 
     .project-card {
-        flex: 0 0 auto; /* Prevent shrinking/growing, base on content */
-        width: 80%; /* Set a percentage width for cards on smaller screens */
-        max-width: 350px; /* Set a maximum width */
-        scroll-snap-align: center; /* Optional: Snap cards to center */
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        flex: none !important;
+        scroll-snap-align: none !important;
+    }
+
+    .carousel-nav {
+        position: absolute !important;
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex !important;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 20;
+        transform: translateY(-50%);
+        padding: 0 0.5rem;
+    }
+
+    .nav-button {
+        pointer-events: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        gap: 1rem !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        box-sizing: border-box;
+        scroll-snap-type: x mandatory;
+        padding: 0.5rem 0 !important;
+    }
+    .project-card {
+        flex: 0 0 80vw !important;
+        max-width: 90vw !important;
+        min-width: 180px !important;
+        width: auto !important;
+        margin: 0 !important;
+        scroll-snap-align: center !important;
+    }
+    .project-card h3 {
+        font-size: 1.1rem !important;
+    }
+    .card-text-content {
+        padding: 0.7rem !important;
+    }
+    .project-meta {
+        font-size: 0.7rem !important;
+    }
+    .carousel-nav {
+        display: flex !important;
+        position: fixed !important;
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 100;
+        transform: translateY(-50%);
+        padding: 0 0.2rem;
+    }
+    .nav-button {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.9rem !important;
+        pointer-events: auto;
     }
 }
 
@@ -726,22 +766,18 @@ h2 {
         text-align: center;
         padding-top: 4rem; /* Reduced padding top for smaller devices */
     }
-
     .hero-content {
         padding-right: 0;
         margin-bottom: 2rem; /* Slightly reduced margin below content */
     }
-
     .hero-links {
         justify-content: center;
         gap: 0.5rem; /* Reduce gap between buttons */
     }
-
     .glitch-text { /* Styles for h1 (name) on smaller screens */
         font-size: 2rem; /* Smaller font size for name */
         margin-bottom: 0.5rem; /* Reduce margin below name */
     }
-
     .hero h2 { /* Responsive styles for Creative Developer */
         font-size: clamp(2.5rem, 10vw, 5rem); /* Smaller font size for smaller screens */
         letter-spacing: -0.02em; /* Adjusted letter spacing */
@@ -751,22 +787,34 @@ h2 {
         -webkit-text-stroke: 3px var(--primary-color);
         text-stroke: 3px var(--primary-color);
     }
-    
     .hero-links .button { /* Styles for buttons in hero on smaller screens */
         padding: 0.6rem 1.2rem; /* Reduce button padding */
         font-size: 0.8rem; /* Reduce button font size */
     }
-
     .nav-links {
         display: none;
     }
-    
     .skills-grid {
         grid-template-columns: 1fr;
     }
-
     .contact-grid {
          grid-template-columns: 1fr;
+    }
+    .projects-grid {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: visible !important;
+        padding: 0;
+        gap: 0;
+    }
+    .project-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 0 2rem 0 !important;
+        flex: none !important;
+        scroll-snap-align: none !important;
     }
 }
 
@@ -1270,4 +1318,156 @@ section {
     .illustrations-grid-container {
         grid-template-columns: repeat(2, 1fr); /* Explicitly create two equal columns */
     }
+}
+
+/* Carousel Navigation Arrows - default */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 20;
+    transform: translateY(-50%);
+    padding: 0 0.5rem;
+}
+
+.nav-button {
+    background-color: rgba(125, 111, 255, 0.5);
+    color: var(--background-color);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
+    pointer-events: auto;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color);
+    opacity: 1;
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .carousel-nav {
+        position: absolute !important;
+        top: 50%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 0 0.1rem;
+        z-index: 30;
+        transform: translateY(-50%);
+    }
+    .nav-button {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+.illustrations-page .nav-links a {
+  color: var(--page-primary-color) !important;
+}
+.illustrations-page .nav-links a:hover {
+  color: var(--page-primary-color) !important;
+}
+.illustrations-page .nav-links a::after {
+  background-color: var(--page-primary-color) !important;
+}
+.illustrations-page .nav-links a:hover::after {
+  background-color: var(--page-primary-color) !important;
+}
+
+/* Hamburger menu styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  z-index: 2001;
+}
+.hamburger span {
+  display: block;
+  width: 28px;
+  height: 4px;
+  margin: 4px 0;
+  background: var(--primary-color);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 2rem;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 10px;
+    flex-direction: column;
+    min-width: 180px;
+    padding: 1rem 0.5rem;
+    z-index: 2000;
+    text-align: right;
+  }
+  .nav-links.show {
+    display: flex;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+.illustrations-page .hamburger span {
+  background: var(--page-primary-color);
+}
+.illustrations-page .nav-links {
+  background: var(--page-background-color);
+}
+.illustrations-page .nav-links a {
+  color: var(--page-primary-color) !important;
+}
+.illustrations-page .nav-links a:hover {
+  color: var(--page-primary-color) !important;
+}
+.illustrations-page .nav-links a::after,
+.illustrations-page .nav-links a:hover::after {
+  background-color: var(--page-primary-color) !important;
+}
+
+.contact-page .hamburger span {
+  background: #e74a75;
+}
+.contact-page .nav-links {
+  background: #fff0f5;
+}
+.contact-page .nav-links a {
+  color: #e74a75 !important;
+}
+.contact-page .nav-links a:hover {
+  color: #e74a75 !important;
+}
+.contact-page .nav-links a::after,
+.contact-page .nav-links a:hover::after {
+  background-color: #e74a75 !important;
 }
