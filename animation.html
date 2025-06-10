@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation - Aleksandra Dorofeeva</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #D2691E;
+            --text-color: #2D3748;
+            --background-color: #F7FAFC;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+        }
+
+        .animation-page {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .main-nav {
+            background-color: var(--background-color);
+            border: none;
+            box-shadow: none;
+        }
+
+        .main-nav a {
+            color: var(--primary-color);
+        }
+
+        .main-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .main-nav a::after {
+            background-color: var(--accent-color);
+        }
+
+        .animation-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .animation-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .animation-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .animation-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-color);
+        }
+
+        .footer {
+            background-color: var(--background-color);
+            border-top: none;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+        }
+
+        .footer a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-name {
+            color: var(--primary-color);
+        }
+
+        .footer-contact p {
+            color: var(--primary-color);
+        }
+
+        main {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body class="animation-page">
+    <nav class="main-nav">
+        <div class="nav-content">
+            <div class="hamburger"><span></span><span></span><span></span></div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="animation-hero">
+            <div class="animation-content">
+                <h1 class="animation-title">Creative Animations</h1>
+                <p class="animation-description">
+                    Welcome to my animation showcase. Here you'll find a collection of interactive and engaging animations
+                    that bring digital experiences to life. Each animation is carefully crafted to create memorable
+                    moments and enhance user engagement.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-name">Aleksandra Dorofeeva</div>
+                <div class="footer-details">
+                    <p><strong>Location:</strong> Remote</p>
+                    <p><strong>Availability:</strong> Open to Opportunities</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="https://t.me/AlexDorofeeva" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.instagram.com/alexdiubina/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.behance.net/AleksandraDorofeeva" target="_blank" title="Behance"><i class="fab fa-behance"></i></a>
+                    <a href="https://github.com/AlexDorofeeva" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/aleksandra-dorofeeva-46997a267/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:alexaleksandradorofeeva@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-contact">
+                    <p>HAVE A PROJECT IN MIND?</p>
+                    <a href="mailto:alexaleksandradorofeeva@gmail.com">→ alexaleksandradorofeeva@gmail.com</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Aleksandra Dorofeeva.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hamburger = document.querySelector('.hamburger');
+        var navLinks = document.querySelector('.nav-links');
+        if (hamburger && navLinks) {
+            hamburger.onclick = function() {
+                navLinks.classList.toggle('show');
+            }
+        }
+    });
+    </script>
+</body>
+</html> 
