@@ -1179,7 +1179,7 @@ section {
 }
 
 .illustration-block {
-    background-color: #fff;
+    background-color: transparent !important;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1219,8 +1219,20 @@ section {
 }
 
 .card-front {
-    background-color: transparent;
-    transform: rotateY(0deg); /* Ensure front stays at 0 degrees */
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card-front img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    border-radius: 4px;
 }
 
 .card-back {
@@ -1229,51 +1241,19 @@ section {
 }
 
 /* Front side colors */
-.illustration-block.color-1 {
-    background-color: var(--block-color-1);
-    color: #fff; /* White text for darker background */
+.card-front.color-1, .card-back.color-1-back {
+    background-color: var(--block-color-1) !important;
+    color: #fff;
 }
 
-.illustration-block.color-1 p {
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
-}
-
-.illustration-block.color-2 {
-    background-color: var(--block-color-2);
+.card-front.color-2, .card-back.color-2-back {
+    background-color: var(--block-color-2) !important;
     color: var(--page-text-color);
 }
 
-.illustration-block.color-3 {
-    background-color: var(--block-color-3);
-    color: #fff; /* White text for darker background */
-}
-
-.illustration-block.color-3 p {
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
-}
-
-/* Back side colors */
-.illustration-block .card-back.color-1-back {
-    background-color: var(--block-color-1); /* Blue */
-    color: #fff; /* White text */
-}
-
-.illustration-block .card-back.color-1-back p {
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
-}
-
-.illustration-block .card-back.color-2-back {
-    background-color: var(--block-color-2); /* Lighter blue */
-    color: var(--page-text-color); /* Dark gray text */
-}
-
-.illustration-block .card-back.color-3-back {
-    background-color: var(--block-color-3); /* Dark gray */
-    color: #fff; /* White text */
-}
-
-.illustration-block .card-back.color-3-back p {
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+.card-front.color-3, .card-back.color-3-back {
+    background-color: var(--block-color-3) !important;
+    color: #fff;
 }
 
 .illustration-block img {
@@ -1442,7 +1422,7 @@ section {
   background: var(--page-primary-color);
 }
 .illustrations-page .nav-links {
-  background: var(--page-background-color);
+  background: transparent !important;
 }
 .illustrations-page .nav-links a {
   color: var(--page-primary-color) !important;
@@ -1470,4 +1450,64 @@ section {
 .contact-page .nav-links a::after,
 .contact-page .nav-links a:hover::after {
   background-color: #e74a75 !important;
+}
+
+.illustrations-grid-container.custom-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: 1fr 1.2fr 1fr;
+  gap: 20px;
+  grid-template-areas:
+    "block1 block2"
+    "block3 block4"
+    "block3 block5";
+  min-height: 600px;
+}
+.block1 { grid-area: block1; }
+.block2 { grid-area: block2; }
+.block3 { grid-area: block3; }
+.block4 { grid-area: block4; }
+.block5 { grid-area: block5; }
+
+/* Make sure illustration-blocks fill their grid area */
+.illustration-block {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  aspect-ratio: 1/1;
+  box-sizing: border-box;
+}
+
+.card-front.color-1, .card-back.color-1-back {
+  background-color: var(--block-color-1) !important;
+  color: #fff;
+}
+.card-front.color-2, .card-back.color-2-back {
+  background-color: var(--block-color-2) !important;
+  color: var(--page-text-color);
+}
+.card-front.color-3, .card-back.color-3-back {
+  background-color: var(--block-color-3) !important;
+  color: #fff;
+}
+
+.illustration-block .card-front.color-1,
+.illustration-block .card-front.color-2,
+.illustration-block .card-front.color-3 {
+  background-color: inherit !important;
+}
+.illustration-block.color-1 .card-front,
+.illustration-block.color-1 .card-back {
+  background-color: var(--block-color-1) !important;
+  color: #fff;
+}
+.illustration-block.color-2 .card-front,
+.illustration-block.color-2 .card-back {
+  background-color: var(--block-color-2) !important;
+  color: var(--page-text-color);
+}
+.illustration-block.color-3 .card-front,
+.illustration-block.color-3 .card-back {
+  background-color: var(--block-color-3) !important;
+  color: #fff;
 }
