@@ -1,39 +1,38 @@
-
-
-
-// Select all cards
+// ========================================
+// CARD HOVER EFFECTS
+// ========================================
 const cards = document.querySelectorAll(".info-card");
 
-// Add hover color dynamically based on the data-hover-color attribute
 cards.forEach((card) => {
   const hoverColor = card.getAttribute("data-hover-color");
   card.style.setProperty("--hover-color", hoverColor);
 });
 
+// ========================================
+// SCROLL PARALLAX EFFECTS
+// ========================================
 window.addEventListener("scroll", function () {
   const header = document.querySelector(".header");
   const profilePhoto = document.querySelector(".profile-photo");
   const textContent = document.querySelector(".text-content");
-  
-    // Get the current scroll position
-    let scrollPosition = window.scrollY;
-  
-    // Parallax effect: Move the photo and text based on scroll position
-    textContent.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Text moves slower
+
+  let scrollPosition = window.scrollY;
+
+  textContent.style.transform = `translateY(${scrollPosition * 0.5}px)`;
   profilePhoto.style.transform = `translateX(50px) translateY(${
     scrollPosition * 0.3
-  }px)`; 
-  
-    // Add parallax class for smooth transition effect
-    if (scrollPosition > 100) {
-      header.classList.add("parallax");
-    } else {
-      header.classList.remove("parallax");
-    }
-  });
-  
+  }px)`;
 
-// Carousel functionality for project cards
+  if (scrollPosition > 100) {
+    header.classList.add("parallax");
+  } else {
+    header.classList.remove("parallax");
+  }
+});
+
+// ========================================
+// PROJECT CAROUSEL FUNCTIONALITY
+// ========================================
 const projectCards = document.querySelectorAll(".project-card");
 const projectsGrid = document.querySelector(".projects-grid");
 const prevBtn = document.getElementById("prevBtn");
@@ -45,25 +44,21 @@ let startPos = 0;
 let currentTranslate = 0;
 let prevTranslate = 0;
 
+// Update carousel position and active card
 function updateCarousel() {
-  // Calculate the translateX value to center the active card
-  const cardWidth = projectCards[0].offsetWidth; // Assuming all cards have the same width
-  const gap = parseFloat(getComputedStyle(projectsGrid).gap); // Get the gap value
-  const containerWidth = projectsGrid.parentElement.offsetWidth; // Get the width of the projects section/container
+  const cardWidth = projectCards[0].offsetWidth;
+  const gap = parseFloat(getComputedStyle(projectsGrid).gap);
+  const containerWidth = projectsGrid.parentElement.offsetWidth;
 
-  // Calculate the current center position of the active card relative to the viewport
   const activeCard = projectCards[activeCardIndex];
   const activeCardRect = activeCard.getBoundingClientRect();
   const activeCardCenter = activeCardRect.left + activeCardRect.width / 2;
 
-  // Calculate the center of the container relative to the viewport
   const containerRect = projectsGrid.parentElement.getBoundingClientRect();
   const containerCenter = containerRect.left + containerRect.width / 2;
 
-  // Calculate the difference between the two centers
   const centerDifference = containerCenter - activeCardCenter;
 
-  // The new translate value is the current translate plus the difference needed to center
   currentTranslate = currentTranslate + centerDifference;
 
   projectsGrid.style.transform = `translateX(${currentTranslate}px)`;
@@ -76,17 +71,15 @@ function updateCarousel() {
     }
   });
 
-  // Disable/enable buttons at ends
   prevBtn.disabled = activeCardIndex === 0;
   nextBtn.disabled = activeCardIndex === projectCards.length - 1;
 }
 
-// Initialize the carousel
+// Initialize carousel
 if (projectCards.length > 0) {
   projectCards[activeCardIndex].classList.add("active");
-  // Call updateCarousel initially to set the correct position on load
   updateCarousel();
-  // Recalculate and update after images load to ensure correct centering
+
   const images = projectsGrid.querySelectorAll("img");
   let imagesLoaded = 0;
   images.forEach((img) => {
@@ -106,38 +99,38 @@ if (projectCards.length > 0) {
   }
 }
 
-// Mouse drag functionality
+// ========================================
+// DRAG FUNCTIONALITY (MOUSE & TOUCH)
+// ========================================
 projectsGrid.addEventListener("mousedown", dragStart);
 projectsGrid.addEventListener("mouseup", dragEnd);
 projectsGrid.addEventListener("mouseleave", dragEnd);
 projectsGrid.addEventListener("mousemove", drag);
 
-// Touch drag functionality (for mobile)
 projectsGrid.addEventListener("touchstart", dragStart);
 projectsGrid.addEventListener("touchend", dragEnd);
 projectsGrid.addEventListener("touchmove", drag);
 
+// Start dragging
 function dragStart(event) {
   isDragging = true;
   startPos =
     event.type === "touchstart" ? event.touches[0].clientX : event.clientX;
   projectsGrid.style.transition = "none";
   prevTranslate = currentTranslate;
-  // Add a class to body to indicate dragging, to prevent unwanted text selection
   document.body.classList.add("dragging");
 }
 
+// End dragging and snap to closest card
 function dragEnd() {
   isDragging = false;
   projectsGrid.style.transition = "transform 0.5s ease";
-  // Remove dragging class from body
   document.body.classList.remove("dragging");
 
-  // Determine which card is closest to the center after dragging ends
   const containerCenter =
     projectsGrid.parentElement.getBoundingClientRect().left +
     projectsGrid.parentElement.offsetWidth / 2;
-  let closestCardIndex = 0; // Default to the first card
+  let closestCardIndex = 0;
   let minDistance = Infinity;
 
   projectCards.forEach((card, index) => {
@@ -152,16 +145,17 @@ function dragEnd() {
   });
 
   activeCardIndex = closestCardIndex;
-  updateCarousel(); // Update to the new active card and position
+  updateCarousel();
 }
 
+// Handle dragging movement
 function drag(event) {
   if (!isDragging) return;
   event.preventDefault();
   const currentPos =
     event.type === "touchmove" ? event.touches[0].clientX : event.clientX;
   const moveAmount = currentPos - startPos;
-  // Limit the drag movement to prevent scrolling past the ends of the carousel
+
   const minTranslate =
     -(projectCards.length - 1) *
       (projectCards[0].offsetWidth +
@@ -179,7 +173,9 @@ function drag(event) {
   projectsGrid.style.transform = `translateX(${currentTranslate}px)`;
 }
 
-// Navigation arrow functionality
+// ========================================
+// CAROUSEL NAVIGATION BUTTONS
+// ========================================
 prevBtn.addEventListener("click", () => {
   activeCardIndex = Math.max(activeCardIndex - 1, 0);
   updateCarousel();
@@ -190,43 +186,37 @@ nextBtn.addEventListener("click", () => {
   updateCarousel();
 });
 
-// Also update carousel on window resize to maintain centering
+// Update carousel on window resize
 window.addEventListener("resize", updateCarousel);
 
-// Observe all sections, skill categories, and contact items
+// ========================================
+// INTERSECTION OBSERVER FOR ANIMATIONS
+// ========================================
 const animatedElements = document.querySelectorAll(
   "section, .skill-category, .contact-item"
 );
 
-const observerOptions = {
-  root: null,
-  rootMargin: "0px",
-  threshold: 0.1,
-};
-
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-// Observe elements that need vertical animation
-animatedElements.forEach((element) => observer.observe(element));
-
-// Smooth scroll for navigation links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth",
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate-in");
+      }
     });
-  });
+  },
+  {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  }
+);
+
+animatedElements.forEach((element) => {
+  observer.observe(element);
 });
 
-// Text scramble effect for the hero title
+// ========================================
+// TEXT SCRAMBLE ANIMATION
+// ========================================
 class TextScramble {
   constructor(el) {
     this.el = el;
@@ -255,7 +245,7 @@ class TextScramble {
   update() {
     let output = "";
     let complete = 0;
-    for (let i = 0, n = this.queue.length; i < n; i++) {
+    for (let i = 0, n = this.queue.length; i < n; ++i) {
       let { from, to, start, end, char } = this.queue[i];
       if (this.frame >= end) {
         complete++;
@@ -265,7 +255,7 @@ class TextScramble {
           char = this.randomChar();
           this.queue[i].char = char;
         }
-        output += `<span class="glitch">${char}</span>`;
+        output += `<span class="dud">${char}</span>`;
       } else {
         output += from;
       }
@@ -285,40 +275,18 @@ class TextScramble {
 }
 
 // Initialize text scramble effect
-const glitchText = document.querySelector(".hero h2"); // Target the h2 for the scramble effect
-if (glitchText) {
-  const fx = new TextScramble(glitchText);
-  fx.setText(glitchText.textContent);
+const phrases = ["Creative Developer", "Digital Artist", "Problem Solver"];
+const el = document.querySelector(".glitch-text");
+const fx = new TextScramble(el);
+
+let counter = 0;
+const next = () => {
+  fx.setText(phrases[counter]).then(() => {
+    setTimeout(next, 2000);
+  });
+  counter = (counter + 1) % phrases.length;
+};
+
+if (el) {
+  next();
 }
-
-// Parallax effect for hero section
-window.addEventListener("scroll", () => {
-  const scrolled = window.pageYOffset;
-  const hero = document.querySelector(".hero");
-  if (hero) {
-    hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-  }
-});
-
-// Add active class to navigation links based on scroll position
-const sections = document.querySelectorAll("section");
-const navItems = document.querySelectorAll(".nav-links a");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    if (pageYOffset >= sectionTop - 200) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navItems.forEach((item) => {
-    item.classList.remove("active");
-    if (item.getAttribute("href").slice(1) === current) {
-      item.classList.add("active");
-    }
-  });
-});
