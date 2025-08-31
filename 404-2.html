@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Lost in Space - Aleksandra Dorofeeva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .space-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        .error-code {
+            font-size: 12rem;
+            font-weight: 900;
+            color: #4fc3f7;
+            text-shadow: 0 0 30px #4fc3f7, 0 0 60px #4fc3f7;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+            z-index: 10;
+            position: relative;
+        }
+
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #81c784;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .astronaut {
+            font-size: 5rem;
+            margin: 2rem 0;
+            animation: rotate 20s linear infinite;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #ee5a24);
+            animation: orbit 15s linear infinite;
+        }
+
+        .planet:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-duration: 20s;
+        }
+
+        .planet:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 60%;
+            right: 15%;
+            background: radial-gradient(circle at 30% 30%, #74b9ff, #0984e3);
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        .planet:nth-child(3) {
+            width: 40px;
+            height: 40px;
+            bottom: 30%;
+            left: 20%;
+            background: radial-gradient(circle at 30% 30%, #a29bfe, #6c5ce7);
+            animation-duration: 18s;
+        }
+
+        .meteor {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: meteor 3s linear infinite;
+        }
+
+        .controls {
+            font-size: 1.2rem;
+            margin-top: 3rem;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 1rem;
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(79, 195, 247, 0.5);
+        }
+
+        .oxygen-level {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1rem;
+            color: #4fc3f7;
+        }
+
+        .oxygen-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .oxygen-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+            animation: oxygen 10s linear infinite;
+        }
+
+        .coordinates {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+            color: #81c784;
+            font-family: monospace;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
+
+        @keyframes meteor {
+            0% { 
+                transform: translateX(-100px) translateY(-100px) rotate(45deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(calc(100vw + 100px)) translateY(calc(100vh + 100px)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes oxygen {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .nebula {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background: radial-gradient(ellipse, rgba(156, 39, 176, 0.3), transparent);
+            border-radius: 50%;
+            animation: nebula 8s ease-in-out infinite;
+        }
+
+        .nebula:nth-child(1) {
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .nebula:nth-child(2) {
+            bottom: 20%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes nebula {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <div class="oxygen-level">
+        <div>OXYGEN LEVEL</div>
+        <div class="oxygen-bar">
+            <div class="oxygen-fill"></div>
+        </div>
+    </div>
+
+    <div class="coordinates">
+        <div>X: 404.000</div>
+        <div>Y: 404.000</div>
+        <div>Z: 404.000</div>
+    </div>
+
+    <div class="space-container">
+        <div class="planet"></div>
+        <div class="planet"></div>
+        <div class="planet"></div>
+        
+        <div class="nebula"></div>
+        <div class="nebula"></div>
+
+        <div class="error-code">404</div>
+        <div class="error-message">LOST IN SPACE</div>
+        <div class="astronaut">👨‍🚀</div>
+        <div class="controls">
+            <p>MISSION CONTROL: PAGE NOT FOUND</p>
+            <p>INITIATING RETURN SEQUENCE...</p>
+        </div>
+        <a href="javascript:history.back()" class="btn">GO BACK</a>
+        <a href="contact.html" class="btn">SEND SOS</a>
+    </div>
+
+    <script>
+        // Create meteors
+        function createMeteors() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const meteor = document.createElement('div');
+                    meteor.className = 'meteor';
+                    meteor.style.top = Math.random() * window.innerHeight + 'px';
+                    meteor.style.left = Math.random() * window.innerWidth + 'px';
+                    meteor.style.animationDelay = Math.random() * 3 + 's';
+                    document.body.appendChild(meteor);
+                    
+                    setTimeout(() => {
+                        meteor.remove();
+                    }, 3000);
+                }, i * 1000);
+            }
+        }
+
+        // Update coordinates
+        function updateCoordinates() {
+            const coords = document.querySelector('.coordinates');
+            const x = Math.floor(Math.random() * 1000);
+            const y = Math.floor(Math.random() * 1000);
+            const z = Math.floor(Math.random() * 1000);
+            
+            coords.innerHTML = `
+                <div>X: ${x}.${Math.floor(Math.random() * 999)}</div>
+                <div>Y: ${y}.${Math.floor(Math.random() * 999)}</div>
+                <div>Z: ${z}.${Math.floor(Math.random() * 999)}</div>
+            `;
+        }
+
+        // Mouse trail effect
+        document.addEventListener('mousemove', function(e) {
+            const trail = document.createElement('div');
+            trail.style.position = 'absolute';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            trail.style.width = '2px';
+            trail.style.height = '2px';
+            trail.style.background = '#4fc3f7';
+            trail.style.borderRadius = '50%';
+            trail.style.pointerEvents = 'none';
+            trail.style.animation = 'trail 1s linear';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 1000);
+        });
+
+        // Add trail animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes trail {
+                0% { transform: scale(1); opacity: 1; }
+                100% { transform: scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        createMeteors();
+        setInterval(updateCoordinates, 2000);
+        setInterval(createMeteors, 10000);
+    </script>
+</body>
+</html>

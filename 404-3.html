@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Oops! - Aleksandra Dorofeeva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .error-container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .error-number {
+            font-size: 15rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-number::before {
+            content: "😅";
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            font-size: 3rem;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        .error-number::after {
+            content: "🤔";
+            position: absolute;
+            bottom: -20px;
+            left: -30px;
+            font-size: 3rem;
+            animation: wiggle 3s ease-in-out infinite 1.5s;
+        }
+
+        .error-message {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .error-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.5s both;
+        }
+
+        .funny-quote {
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: slideInUp 1s ease-out 0.7s both;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: slideInUp 1s ease-out 0.9s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border-color: #ff6b6b;
+        }
+
+        .btn.primary:hover {
+            background: linear-gradient(135deg, #ee5a24, #ff6b6b);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        }
+
+        .floating-emoji:nth-child(1) {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-emoji:nth-child(2) {
+            top: 25%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-emoji:nth-child(3) {
+            top: 60%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        .floating-emoji:nth-child(4) {
+            top: 70%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        .floating-emoji:nth-child(5) {
+            top: 40%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .floating-emoji:nth-child(6) {
+            top: 80%;
+            left: 60%;
+            animation-delay: 5s;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, #fff 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, #fff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: patternMove 20s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { 
+                transform: rotate(0deg);
+            }
+            25% { 
+                transform: rotate(-10deg);
+            }
+            75% { 
+                transform: rotate(10deg);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+
+        @keyframes patternMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-number {
+                font-size: 10rem;
+            }
+            
+            .error-number::before,
+            .error-number::after {
+                font-size: 2rem;
+            }
+            
+            .error-message {
+                font-size: 2rem;
+            }
+            
+            .error-description {
+                font-size: 1rem;
+                padding: 0 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="floating-elements">
+        <div class="floating-emoji">🎯</div>
+        <div class="floating-emoji">🎪</div>
+        <div class="floating-emoji">🎨</div>
+        <div class="floating-emoji">🎭</div>
+        <div class="floating-emoji">🎪</div>
+        <div class="floating-emoji">🎯</div>
+    </div>
+
+    <div class="container">
+        <div class="error-container">
+            <div class="error-number">404</div>
+            <div class="error-message">Oops! Page Not Found</div>
+            <div class="error-description">
+                Looks like this page decided to take a vacation without telling us! 
+                Maybe it's sipping cocktails on a digital beach somewhere? 🏖️
+            </div>
+            <div class="funny-quote">
+                "The best error pages are the ones that make you smile instead of cry" 
+                - Some wise developer, probably
+            </div>
+            <div class="controls">
+                <a href="javascript:history.back()" class="btn primary">🚀 Go Back</a>
+                <a href="contact.html" class="btn">💬 Contact Support</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add click ripple effect
+        document.addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.left = e.clientX - 10 + 'px';
+            ripple.style.top = e.clientY - 10 + 'px';
+            ripple.style.animation = 'ripple 0.6s linear';
+            
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add random emoji changes
+        const emojis = ['🎯', '🎪', '🎨', '🎭', '🎪', '🎯', '🎪', '🎨', '🎭', '🎪'];
+        const floatingElements = document.querySelectorAll('.floating-emoji');
+        
+        setInterval(() => {
+            floatingElements.forEach(element => {
+                if (Math.random() > 0.7) {
+                    element.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

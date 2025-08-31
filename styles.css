@@ -296,7 +296,7 @@ h2 {
 
 /* Projects Grid */
 .projects-grid {
-    display: grid;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 3rem;
@@ -304,12 +304,13 @@ h2 {
     overflow: visible;
     width: 100%;
     position: relative;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    transition: transform 0.5s ease;
 }
 
 .project-card {
-    width: 100%;
-    max-width: 100%;
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
     position: relative;
     border-radius: 15px;
     overflow: hidden;
@@ -392,6 +393,112 @@ h2 {
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     color: var(--primary-color); /* Use primary color for title */
+}
+
+/* Creative 404 Preview Styles */
+.creative-404-preview {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.error-number {
+    font-size: 4rem;
+    font-weight: 900;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 0.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.error-message {
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.creative-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 20px;
+    height: 20px;
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 15px;
+    height: 15px;
+    top: 60%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.shape-3 {
+    width: 25px;
+    height: 25px;
+    bottom: 30%;
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.search-icon, .home-icon {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.search-icon {
+    top: 25%;
+    right: 25%;
+    animation-delay: 0.5s;
+}
+
+.home-icon {
+    bottom: 25%;
+    right: 15%;
+    animation-delay: 1.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
     letter-spacing: 0.05em; /* Add some letter spacing */
 }
 
@@ -684,9 +791,8 @@ section.animate-in {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .projects-grid {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
-        gap: 1rem !important;
+        display: flex !important;
+        gap: 2rem !important;
         width: 100% !important;
         max-width: 100vw !important;
         overflow-x: visible !important;
@@ -703,12 +809,11 @@ section.animate-in {
     }
 
     .project-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
         margin: 0 !important;
         flex: none !important;
-        scroll-snap-align: none !important;
     }
 
     .carousel-nav {
@@ -734,22 +839,19 @@ section.animate-in {
     .projects-grid {
         display: flex !important;
         flex-direction: row !important;
-        overflow-x: auto !important;
+        overflow-x: visible !important;
         overflow-y: visible !important;
         gap: 1rem !important;
         width: 100vw !important;
         max-width: 100vw !important;
         box-sizing: border-box;
-        scroll-snap-type: x mandatory;
         padding: 0.5rem 0 !important;
     }
     .project-card {
-        flex: 0 0 80vw !important;
-        max-width: 90vw !important;
-        min-width: 180px !important;
-        width: auto !important;
+        width: 250px !important;
+        min-width: 250px !important;
+        max-width: 250px !important;
         margin: 0 !important;
-        scroll-snap-align: center !important;
     }
     .project-card h3 {
         font-size: 1.1rem !important;

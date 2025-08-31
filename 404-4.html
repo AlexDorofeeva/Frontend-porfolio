@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Deep Dive - Aleksandra Dorofeeva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(180deg, #006994 0%, #003366 50%, #001122 100%);
+            color: #fff;
+            font-family: 'Comfortaa', cursive;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .ocean-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+            border-radius: 50%;
+            animation: rise 4s linear infinite;
+        }
+
+        .bubble:nth-child(1) { width: 20px; height: 20px; left: 10%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 15px; height: 15px; left: 20%; animation-delay: 1s; }
+        .bubble:nth-child(3) { width: 25px; height: 25px; left: 30%; animation-delay: 2s; }
+        .bubble:nth-child(4) { width: 18px; height: 18px; left: 40%; animation-delay: 3s; }
+        .bubble:nth-child(5) { width: 22px; height: 22px; left: 50%; animation-delay: 0.5s; }
+        .bubble:nth-child(6) { width: 16px; height: 16px; left: 60%; animation-delay: 1.5s; }
+        .bubble:nth-child(7) { width: 24px; height: 24px; left: 70%; animation-delay: 2.5s; }
+        .bubble:nth-child(8) { width: 19px; height: 19px; left: 80%; animation-delay: 3.5s; }
+        .bubble:nth-child(9) { width: 21px; height: 21px; left: 90%; animation-delay: 1.8s; }
+
+        .tree {
+            position: absolute;
+            bottom: 100px;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 200px solid #228B22;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .tree:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .tree:nth-child(2) {
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .tree:nth-child(3) {
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .tree:nth-child(4) {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .tree:nth-child(5) {
+            left: 90%;
+            animation-delay: 0.5s;
+        }
+
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            width: 20px;
+            height: 60px;
+            background: #8B4513;
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.8;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .cloud:before,
+        .cloud:after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+        }
+
+        .cloud:before {
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            left: 10px;
+        }
+
+        .cloud:after {
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            right: 20px;
+        }
+
+        .cloud:nth-child(1) {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .cloud:nth-child(2) {
+            width: 80px;
+            height: 30px;
+            top: 30%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+
+        .cloud:nth-child(3) {
+            width: 60px;
+            height: 25px;
+            top: 15%;
+            left: 60%;
+            animation-delay: 2s;
+        }
+
+        .error-code {
+            font-size: 12rem;
+            font-weight: 700;
+            color: #87CEEB;
+            text-shadow: 
+                0 0 30px #87CEEB, 
+                0 0 60px #87CEEB,
+                0 0 90px #87CEEB,
+                0 0 120px #87CEEB;
+            margin-bottom: 2rem;
+            animation: underwaterFloat 8s ease-in-out infinite;
+            z-index: 10;
+            position: relative;
+            font-family: 'Fredoka One', cursive;
+            filter: blur(0.5px);
+        }
+
+        .error-code::before {
+            content: "404";
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #00BFFF;
+            text-shadow: 
+                0 0 20px #00BFFF,
+                0 0 40px #00BFFF;
+            animation: underwaterFloat 8s ease-in-out infinite 0.5s;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        .error-code::after {
+            content: "404";
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #1E90FF;
+            text-shadow: 
+                0 0 15px #1E90FF,
+                0 0 30px #1E90FF;
+            animation: underwaterFloat 8s ease-in-out infinite 1s;
+            z-index: -2;
+            filter: blur(1.5px);
+        }
+
+        .error-message {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #98FB98;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .diver {
+            font-size: 5rem;
+            margin: 2rem 0;
+            animation: swim 4s ease-in-out infinite;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #228B22;
+            border-radius: 0 100% 0 100%;
+            animation: fall 4s linear infinite;
+        }
+
+        .controls {
+            font-size: 1.3rem;
+            margin-top: 3rem;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            color: #2d5016;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 1rem;
+            background: linear-gradient(45deg, #006994, #87CEEB);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Comfortaa', cursive;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 105, 148, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 105, 148, 0.5);
+        }
+
+        .depth-meter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1rem;
+            color: #87CEEB;
+        }
+
+        .pressure {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1rem;
+            color: #87CEEB;
+        }
+
+        .oxygen-tank {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 1rem;
+            color: #98FB98;
+        }
+
+        .oxygen-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .oxygen-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #98FB98, #32CD32);
+            animation: oxygen 15s linear infinite;
+        }
+
+        @keyframes rise {
+            0% { 
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(20px) translateY(-10px); }
+            50% { transform: translateX(0px) translateY(-20px); }
+            75% { transform: translateX(-20px) translateY(-10px); }
+        }
+
+        @keyframes oxygen {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes underwaterFloat {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                filter: blur(0.5px);
+            }
+            25% { 
+                transform: translateY(-15px) translateX(5px) rotate(1deg);
+                filter: blur(0.8px);
+            }
+            50% { 
+                transform: translateY(-25px) translateX(-3px) rotate(-1deg);
+                filter: blur(1px);
+            }
+            75% { 
+                transform: translateY(-10px) translateX(8px) rotate(0.5deg);
+                filter: blur(0.6px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fall {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sunMove {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-20px) translateY(-20px); }
+            50% { transform: translateX(0) translateY(-40px); }
+            75% { transform: translateX(20px) translateY(-20px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        .butterfly {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: flutter 3s ease-in-out infinite;
+        }
+
+        .butterfly:nth-child(1) {
+            top: 30%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .butterfly:nth-child(2) {
+            top: 40%;
+            right: 30%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(-5px) rotate(-5deg); }
+            75% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .mushroom {
+            position: absolute;
+            bottom: 100px;
+            width: 30px;
+            height: 40px;
+            background: #FF6B6B;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .mushroom:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background: #8B4513;
+            border-radius: 0 0 50% 50%;
+        }
+
+        .mushroom:nth-child(1) {
+            left: 15%;
+        }
+
+        .mushroom:nth-child(2) {
+            left: 85%;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+    
+    <div class="depth-meter">
+        <div>🌊 DEPTH: 404m</div>
+        <div>💧 TEMPERATURE: 4°C</div>
+    </div>
+
+    <div class="pressure">
+        <div>⚖️ PRESSURE: 40.4 atm</div>
+        <div>🌊 VISIBILITY: 4.04m</div>
+    </div>
+
+    <div class="oxygen-tank">
+        <div>🫧 OXYGEN LEVEL</div>
+        <div class="oxygen-bar">
+            <div class="oxygen-fill"></div>
+        </div>
+    </div>
+
+    <div class="ocean-container">
+        <div class="fish">🐠</div>
+        <div class="fish">🐟</div>
+        <div class="fish">🐡</div>
+        <div class="fish">🦈</div>
+
+        <div class="error-code">404</div>
+        <div class="error-message">DEEP DIVE</div>
+        <div class="diver">🤿</div>
+        <div class="controls">
+            <p>You've gone too deep into the digital ocean</p>
+            <p>Let's swim back to the surface</p>
+        </div>
+        <a href="javascript:history.back()" class="btn">Surface</a>
+        <a href="contact.html" class="btn">Send SOS</a>
+    </div>
+
+    <script>
+        // Create falling leaves
+        function createLeaves() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const leaf = document.createElement('div');
+                    leaf.className = 'leaf';
+                    leaf.style.left = Math.random() * window.innerWidth + 'px';
+                    leaf.style.animationDelay = Math.random() * 4 + 's';
+                    leaf.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    document.body.appendChild(leaf);
+                    
+                    setTimeout(() => {
+                        leaf.remove();
+                    }, 5000);
+                }, i * 200);
+            }
+        }
+
+        // Update weather
+        function updateWeather() {
+            const weather = document.querySelector('.weather');
+            const temp = document.querySelector('.temperature');
+            const conditions = ['🌤️ Partly Cloudy', '☀️ Sunny', '🌦️ Light Rain', '🌤️ Partly Cloudy'];
+            const temps = ['72°F', '75°F', '68°F', '70°F'];
+            const humidities = ['65%', '70%', '80%', '68%'];
+            
+            const randomIndex = Math.floor(Math.random() * conditions.length);
+            weather.innerHTML = `
+                <div>${conditions[randomIndex]}</div>
+                <div>Wind: ${Math.floor(Math.random() * 10 + 3)} mph</div>
+            `;
+            
+            temp.innerHTML = `
+                <div>🌡️ ${temps[randomIndex]}</div>
+                <div>Humidity: ${humidities[randomIndex]}</div>
+            `;
+        }
+
+        // Mouse interaction - create ripples
+        document.addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.background = 'rgba(34, 139, 34, 0.3)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'ripple 1s linear';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(20); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        createLeaves();
+        setInterval(createLeaves, 8000);
+        setInterval(updateWeather, 5000);
+    </script>
+</body>
+</html>

@@ -3,13 +3,932 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | Aleksandra Dorofeeva</title>
+    <title>404 Pages - Aleksandra Dorofeeva</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00838F; /* Teal */
+            --secondary-color: #00ACC1; /* Cyan */
+            --accent-color: #26C6DA; /* Light Cyan */
+            --text-color: #263238;
+            --background-color: #E0F2F1;
+            --block-color-1: #00838F; /* Teal */
+            --block-color-2: #00ACC1; /* Cyan */
+            --block-color-3: #26C6DA; /* Light Cyan */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+        }
+
+        .error404-page {
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .main-nav {
+            background-color: var(--background-color);
+            border: none;
+            box-shadow: none;
+        }
+
+        .main-nav a {
+            color: var(--primary-color);
+        }
+
+        .main-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .main-nav a::after {
+            background-color: var(--accent-color);
+        }
+
+        .error404-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .error404-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        .error404-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .error404-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-color);
+        }
+
+        /* 404 Grid Styles */
+        .error404-grid-section {
+            padding: 4rem 2rem;
+            background-color: transparent;
+        }
+
+        .error404-grid-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 600px;
+        }
+
+        .error404-block {
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .error404-block.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .error404-block.large {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+        }
+
+        .error404-block.medium {
+            grid-column: 2 / 4;
+            grid-row: 1 / 2;
+        }
+
+        .error404-block.small-1 {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+
+        .error404-block.small-2 {
+            grid-column: 3 / 4;
+            grid-row: 2 / 3;
+        }
+
+        .illustration-block.large {
+            flex: 1 1 100%;
+            height: 400px;
+        }
+
+        .illustration-block.medium {
+            flex: 1 1 calc(50% - 20px);
+            height: 400px;
+        }
+
+        .illustration-block.medium:first-of-type {
+            flex: 1 1 40%;
+        }
+
+        .illustration-block.medium:last-of-type {
+            flex: 1 1 60%;
+        }
+
+        .illustration-block.small {
+            flex: 1 1 calc(33.333% - 20px);
+            height: 300px;
+        }
+
+        .illustration-block.small:first-of-type {
+            flex: 1 1 80%;
+        }
+
+        .illustration-block.small:last-of-type {
+            flex: 1 1 20%;
+        }
+
+        .animation-block {
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            aspect-ratio: 1/1;
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .animation-block.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card-front img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .error-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .error-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 25%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+
+        /* Animated Preview Styles */
+        .animated-preview {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Gaming Preview */
+        .gaming-preview {
+            background: #000;
+            color: #00ff00;
+        }
+
+        .pixel-grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,255,0,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,0,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: gridMove 10s linear infinite;
+        }
+
+        .gaming-preview .error-number {
+            font-size: 3rem;
+            font-weight: 900;
+            text-shadow: 
+                0 0 20px #00ff00,
+                0 0 40px #00ff00,
+                0 0 60px #00ff00;
+            animation: glitch 2s infinite;
+            position: relative;
+            display: inline-block;
+            z-index: 10;
+        }
+
+        .gaming-preview .error-number::before {
+            content: "404";
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            color: #ff0000;
+            z-index: -1;
+            animation: glitch 2s infinite reverse;
+        }
+
+        .gaming-preview .error-number::after {
+            content: "404";
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            color: #0000ff;
+            z-index: -2;
+            animation: glitch 2s infinite 0.5s;
+        }
+
+        .gaming-preview .error-message {
+            font-size: 1rem;
+            animation: blink 1s infinite;
+            z-index: 10;
+        }
+
+        .gaming-preview .pixel-character {
+            font-size: 2rem;
+            animation: jump 2s infinite;
+            z-index: 10;
+        }
+
+        .gaming-preview .score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            z-index: 10;
+        }
+
+        .gaming-preview .lives {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.7rem;
+            z-index: 10;
+        }
+
+        .gaming-preview .life {
+            display: inline-block;
+            margin-right: 5px;
+            animation: pulse 1s infinite;
+        }
+
+        .gaming-preview .floating-pixels {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .gaming-preview .pixel {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ff00;
+            animation: float 3s infinite;
+        }
+
+        .gaming-preview .pixel:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .gaming-preview .pixel:nth-child(2) { left: 30%; animation-delay: 1s; }
+        .gaming-preview .pixel:nth-child(3) { left: 50%; animation-delay: 2s; }
+        .gaming-preview .pixel:nth-child(4) { left: 70%; animation-delay: 0.5s; }
+        .gaming-preview .pixel:nth-child(5) { left: 90%; animation-delay: 1.5s; }
+
+        /* Space Preview */
+        .space-preview {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .stars-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        .space-preview .error-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #4fc3f7;
+            text-shadow: 0 0 30px #4fc3f7;
+            animation: float 6s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .space-preview .error-message {
+            font-size: 1rem;
+            color: #81c784;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .space-preview .astronaut {
+            font-size: 2rem;
+            animation: rotate 20s linear infinite;
+            z-index: 10;
+        }
+
+        .space-preview .planet {
+            position: absolute;
+            border-radius: 50%;
+            animation: orbit 15s linear infinite;
+        }
+
+        .space-preview .planet-1 {
+            width: 20px;
+            height: 20px;
+            top: 20%;
+            left: 10%;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #ee5a24);
+            animation-duration: 20s;
+        }
+
+        .space-preview .planet-2 {
+            width: 15px;
+            height: 15px;
+            top: 60%;
+            right: 15%;
+            background: radial-gradient(circle at 30% 30%, #74b9ff, #0984e3);
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        .space-preview .planet-3 {
+            width: 12px;
+            height: 12px;
+            bottom: 30%;
+            left: 20%;
+            background: radial-gradient(circle at 30% 30%, #a29bfe, #6c5ce7);
+            animation-duration: 18s;
+        }
+
+        .space-preview .oxygen-level {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.6rem;
+            color: #4fc3f7;
+            z-index: 10;
+        }
+
+        .space-preview .oxygen-bar {
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .space-preview .oxygen-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+            animation: oxygen 10s linear infinite;
+        }
+
+        .space-preview .coordinates {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.5rem;
+            color: #81c784;
+            font-family: monospace;
+            z-index: 10;
+        }
+
+        /* Fun Preview */
+        .fun-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .fun-preview .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, #fff 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, #fff 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: patternMove 20s linear infinite;
+        }
+
+        .fun-preview .error-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 10;
+            animation: bounce 2s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .fun-preview .error-number::before {
+            content: "😅";
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 1.5rem;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        .fun-preview .error-number::after {
+            content: "🤔";
+            position: absolute;
+            bottom: -10px;
+            left: -15px;
+            font-size: 1.5rem;
+            animation: wiggle 3s ease-in-out infinite 1.5s;
+        }
+
+        .fun-preview .error-message {
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .fun-preview .floating-emoji {
+            position: absolute;
+            font-size: 1rem;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .fun-preview .emoji-1 { top: 15%; left: 10%; animation-delay: 0s; }
+        .fun-preview .emoji-2 { top: 25%; right: 15%; animation-delay: 2s; }
+        .fun-preview .emoji-3 { top: 60%; left: 5%; animation-delay: 4s; }
+        .fun-preview .emoji-4 { top: 70%; right: 10%; animation-delay: 1s; }
+        .fun-preview .emoji-5 { top: 40%; left: 80%; animation-delay: 3s; }
+        .fun-preview .emoji-6 { top: 80%; left: 60%; animation-delay: 5s; }
+
+        /* Ocean Preview */
+        .ocean-preview {
+            background: linear-gradient(180deg, #006994 0%, #003366 50%, #001122 100%);
+        }
+
+        .ocean-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #006994 0%, #003366 50%, #001122 100%);
+        }
+
+        .ocean-preview .error-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #87CEEB;
+            text-shadow: 
+                0 0 30px #87CEEB,
+                0 0 60px #87CEEB,
+                0 0 90px #87CEEB;
+            animation: underwaterFloat 8s ease-in-out infinite;
+            z-index: 10;
+            position: relative;
+            filter: blur(0.3px);
+        }
+
+        .ocean-preview .error-number::before {
+            content: "404";
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #00BFFF;
+            text-shadow: 
+                0 0 20px #00BFFF,
+                0 0 40px #00BFFF;
+            animation: underwaterFloat 8s ease-in-out infinite 0.5s;
+            z-index: -1;
+            filter: blur(0.6px);
+        }
+
+        .ocean-preview .error-number::after {
+            content: "404";
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #1E90FF;
+            text-shadow: 
+                0 0 15px #1E90FF,
+                0 0 30px #1E90FF;
+            animation: underwaterFloat 8s ease-in-out infinite 1s;
+            z-index: -2;
+            filter: blur(0.9px);
+        }
+
+        .ocean-preview .error-message {
+            font-size: 1rem;
+            color: #98FB98;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .ocean-preview .diver {
+            font-size: 2rem;
+            animation: swim 4s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .ocean-preview .fish {
+            position: absolute;
+            font-size: 0.8rem;
+            animation: swim 3s ease-in-out infinite;
+        }
+
+        .ocean-preview .fish-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .ocean-preview .fish-2 { top: 40%; right: 15%; animation-delay: 1.5s; }
+        .ocean-preview .fish-3 { top: 60%; left: 20%; animation-delay: 3s; }
+        .ocean-preview .fish-4 { top: 30%; right: 30%; animation-delay: 4.5s; }
+
+        .ocean-preview .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+            border-radius: 50%;
+            animation: rise 4s linear infinite;
+        }
+
+        .ocean-preview .bubble-1 { width: 8px; height: 8px; left: 10%; animation-delay: 0s; }
+        .ocean-preview .bubble-2 { width: 6px; height: 6px; left: 30%; animation-delay: 1s; }
+        .ocean-preview .bubble-3 { width: 10px; height: 10px; left: 50%; animation-delay: 2s; }
+        .ocean-preview .bubble-4 { width: 7px; height: 7px; left: 70%; animation-delay: 3s; }
+        .ocean-preview .bubble-5 { width: 9px; height: 9px; left: 90%; animation-delay: 0.5s; }
+
+        .ocean-preview .depth-meter {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            font-size: 0.5rem;
+            color: #87CEEB;
+            z-index: 10;
+        }
+
+        .ocean-preview .pressure {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.5rem;
+            color: #87CEEB;
+            z-index: 10;
+        }
+
+        .ocean-preview .oxygen-tank {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            font-size: 0.5rem;
+            color: #98FB98;
+            z-index: 10;
+        }
+
+        .ocean-preview .oxygen-bar {
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .ocean-preview .oxygen-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #98FB98, #32CD32);
+            animation: oxygen 15s linear infinite;
+        }
+
+        /* Additional Animations */
+        @keyframes glitch {
+            0%, 100% { 
+                transform: translate(0);
+                text-shadow: 
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00,
+                    0 0 60px #00ff00;
+            }
+            10% { 
+                transform: translate(-3px, 3px);
+                text-shadow: 
+                    0 0 20px #ff0000,
+                    0 0 40px #ff0000,
+                    0 0 60px #ff0000;
+            }
+            20% { 
+                transform: translate(-2px, -2px);
+                text-shadow: 
+                    0 0 20px #0000ff,
+                    0 0 40px #0000ff,
+                    0 0 60px #0000ff;
+            }
+            30% { 
+                transform: translate(3px, 3px);
+                text-shadow: 
+                    0 0 20px #ffff00,
+                    0 0 40px #ffff00,
+                    0 0 60px #ffff00;
+            }
+            40% { 
+                transform: translate(2px, -2px);
+                text-shadow: 
+                    0 0 20px #ff00ff,
+                    0 0 40px #ff00ff,
+                    0 0 60px #ff00ff;
+            }
+            50% { 
+                transform: translate(-1px, 1px);
+                text-shadow: 
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 60px #00ffff;
+            }
+            60% { 
+                transform: translate(1px, -1px);
+                text-shadow: 
+                    0 0 20px #ff8800,
+                    0 0 40px #ff8800,
+                    0 0 60px #ff8800;
+            }
+            70% { 
+                transform: translate(-3px, -3px);
+                text-shadow: 
+                    0 0 20px #8800ff,
+                    0 0 40px #8800ff,
+                    0 0 60px #8800ff;
+            }
+            80% { 
+                transform: translate(3px, 1px);
+                text-shadow: 
+                    0 0 20px #00ff88,
+                    0 0 40px #00ff88,
+                    0 0 60px #00ff88;
+            }
+            90% { 
+                transform: translate(-1px, -3px);
+                text-shadow: 
+                    0 0 20px #ff0088,
+                    0 0 40px #ff0088,
+                    0 0 60px #ff0088;
+            }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+        }
+
+        @keyframes oxygen {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(5deg); }
+            50% { transform: translateY(-2px) rotate(-5deg); }
+            75% { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        @keyframes sunMove {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-5px) translateY(-5px); }
+            50% { transform: translateX(0) translateY(-10px); }
+            75% { transform: translateX(5px) translateY(-5px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        @keyframes rise {
+            0% { 
+                transform: translateY(100%) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(-50px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(0px) translateY(-10px); }
+            75% { transform: translateX(-10px) translateY(-5px); }
+        }
+
+        @keyframes underwaterFloat {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                filter: blur(0.3px);
+            }
+            25% { 
+                transform: translateY(-8px) translateX(3px) rotate(0.5deg);
+                filter: blur(0.5px);
+            }
+            50% { 
+                transform: translateY(-15px) translateX(-2px) rotate(-0.5deg);
+                filter: blur(0.7px);
+            }
+            75% { 
+                transform: translateY(-5px) translateX(5px) rotate(0.3deg);
+                filter: blur(0.4px);
+            }
+        }
+
+        .animation-block.color-1, 
+        .animation-block.color-2, 
+        .animation-block.color-3 { 
+            background-color: var(--primary-color); 
+        }
+
+        .footer {
+            background-color: var(--background-color);
+            border-top: none;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+        }
+
+        .footer a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-name {
+            color: var(--primary-color);
+        }
+
+        .footer-contact p {
+            color: var(--primary-color);
+        }
+
+        main {
+            padding-top: 0;
+        }
+    </style>
 </head>
-<body>
+<body class="error404-page">
     <nav class="main-nav">
         <div class="nav-content">
+            <div class="hamburger"><span></span><span></span><span></span></div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="contact.html">Contact</a>
@@ -17,22 +936,138 @@
         </div>
     </nav>
 
-    <main class="error-page">
-        <div class="error-content">
-            <h1 class="error-title">404</h1>
-            <div class="error-decoration">
-                <svg class="error-svg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <path d="M30 30L70 70M70 30L30 70" stroke="currentColor" stroke-width="2"/>
-                </svg>
+    <main>
+        <section class="error404-hero">
+            <div class="error404-content">
+                <h1 class="error404-title">Creative 404 Pages</h1>
+                <p class="error404-description">
+                    Explore my collection of creative and engaging 404 error pages. Each design transforms the typical
+                    "page not found" experience into an opportunity for user engagement and brand personality.
+                    Click on any card to see the details.
+                </p>
             </div>
-            <h2>Oops! Page Not Found</h2>
-            <p>Looks like you've ventured into the creative void. Let's get you back on track!</p>
-            <div class="error-links">
-                <a href="index.html" class="button">Back to Home</a>
-                <a href="contact.html" class="button">Contact Me</a>
+        </section>
+
+        <section class="error404-grid-section">
+            <div class="error404-grid-container">
+                <div class="error404-block large">
+                    <div class="card-inner">
+                        <div class="card-front" onclick="window.location.href='404-1.html'" style="cursor: pointer;">
+                            <div class="animated-preview gaming-preview">
+                                <div class="pixel-grid-bg"></div>
+                                <div class="error-number">404</div>
+                                <div class="error-message">GAME OVER</div>
+                                <div class="pixel-character">👾</div>
+                                <div class="score">SCORE: 404</div>
+                                <div class="lives">
+                                    <span class="life">❤️</span>
+                                    <span class="life">❤️</span>
+                                    <span class="life">❤️</span>
+                                </div>
+                                <div class="floating-pixels">
+                                    <div class="pixel"></div>
+                                    <div class="pixel"></div>
+                                    <div class="pixel"></div>
+                                    <div class="pixel"></div>
+                                    <div class="pixel"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Retro Gaming 404</h3>
+                            <p>8-bit pixel art gaming theme with glitch effects, floating pixels, and retro gaming aesthetics.</p>
+                            <div class="error-description">Technologies: CSS3, JavaScript, Pixel Art</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error404-block medium">
+                    <div class="card-inner">
+                        <div class="card-front" onclick="window.location.href='404-2.html'" style="cursor: pointer;">
+                            <div class="animated-preview space-preview">
+                                <div class="stars-bg"></div>
+                                <div class="error-number">404</div>
+                                <div class="error-message">LOST IN SPACE</div>
+                                <div class="astronaut">👨‍🚀</div>
+                                <div class="planet planet-1"></div>
+                                <div class="planet planet-2"></div>
+                                <div class="planet planet-3"></div>
+                                <div class="oxygen-level">
+                                    <div>OXYGEN</div>
+                                    <div class="oxygen-bar">
+                                        <div class="oxygen-fill"></div>
+                                    </div>
+                                </div>
+                                <div class="coordinates">
+                                    <div>X: 404.000</div>
+                                    <div>Y: 404.000</div>
+                                    <div>Z: 404.000</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Space Theme 404</h3>
+                            <p>Interactive space-themed error page with floating planets, meteors, and astronaut elements.</p>
+                            <div class="error-description">Technologies: CSS3, JavaScript, GSAP</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="error404-block small-1">
+                    <div class="card-inner">
+                        <div class="card-front" onclick="window.location.href='404-3.html'" style="cursor: pointer;">
+                            <div class="animated-preview fun-preview">
+                                <div class="bg-pattern"></div>
+                                <div class="error-number">404</div>
+                                <div class="error-message">Oops!</div>
+                                <div class="floating-emoji emoji-1">🎯</div>
+                                <div class="floating-emoji emoji-2">🎪</div>
+                                <div class="floating-emoji emoji-3">🎨</div>
+                                <div class="floating-emoji emoji-4">🎭</div>
+                                <div class="floating-emoji emoji-5">🎪</div>
+                                <div class="floating-emoji emoji-6">🎯</div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Fun 404</h3>
+                            <p>Playful and humorous error page with emojis, witty messaging, and entertaining animations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="error404-block small-2">
+                    <div class="card-inner">
+                        <div class="card-front" onclick="window.location.href='404-4.html'" style="cursor: pointer;">
+                            <div class="animated-preview ocean-preview">
+                                <div class="ocean-bg"></div>
+                                <div class="error-number">404</div>
+                                <div class="error-message">DEEP DIVE</div>
+                                <div class="diver">🤿</div>
+                                <div class="fish fish-1">🐠</div>
+                                <div class="fish fish-2">🐟</div>
+                                <div class="fish fish-3">🐡</div>
+                                <div class="fish fish-4">🦈</div>
+                                <div class="bubble bubble-1"></div>
+                                <div class="bubble bubble-2"></div>
+                                <div class="bubble bubble-3"></div>
+                                <div class="bubble bubble-4"></div>
+                                <div class="bubble bubble-5"></div>
+                                <div class="depth-meter">🌊 DEPTH: 404m</div>
+                                <div class="pressure">⚖️ PRESSURE: 40.4 atm</div>
+                                <div class="oxygen-tank">
+                                    <div>🫧 OXYGEN</div>
+                                    <div class="oxygen-bar">
+                                        <div class="oxygen-fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Ocean 404</h3>
+                            <p>Underwater-themed error page with rising bubbles, swimming fish, and ocean elements.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -40,10 +1075,42 @@
             <div class="footer-left">
                 <div class="footer-name">Aleksandra Dorofeeva</div>
                 <div class="footer-details">
-                    <p><strong>Email:</strong> <a href="mailto:alexaleksandradorofeeva@gmail.com">alexaleksandradorofeeva@gmail.com</a></p>
+                    <p><strong>Location:</strong> Remote</p>
+                    <p><strong>Availability:</strong> Open to Opportunities</p>
+                </div>
+                <div class="footer-socials">
+                    <a href="https://t.me/AlexDorofeeva" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.instagram.com/alexdiubina/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.behance.net/AleksandraDorofeeva" target="_blank" title="Behance"><i class="fab fa-behance"></i></a>
+                    <a href="https://github.com/AlexDorofeeva" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/aleksandra-dorofeeva-46997a267/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:alexaleksandradorofeeva@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="footer-contact">
+                    <p>HAVE A PROJECT IN MIND?</p>
+                    <a href="mailto:alexaleksandradorofeeva@gmail.com">→ alexaleksandradorofeeva@gmail.com</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Aleksandra Dorofeeva.</p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <script src="index.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hamburger = document.querySelector('.hamburger');
+        var navLinks = document.querySelector('.nav-links');
+        if (hamburger && navLinks) {
+            hamburger.onclick = function() {
+                navLinks.classList.toggle('show');
+            }
+        }
+    });
+    </script>
+
 </body>
 </html> 

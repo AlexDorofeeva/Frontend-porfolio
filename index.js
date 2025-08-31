@@ -39,6 +39,29 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 let activeCardIndex = 0;
 
+// Clone cards for infinite scroll
+function setupInfiniteCarousel() {
+  if (projectCards.length === 0) return;
+
+  // Clone first and last cards for seamless loop
+  const firstCard = projectCards[0].cloneNode(true);
+  const lastCard = projectCards[projectCards.length - 1].cloneNode(true);
+
+  // Add cloned cards to the grid
+  projectsGrid.appendChild(firstCard);
+  projectsGrid.insertBefore(lastCard, projectCards[0]);
+
+  // Update the cards reference to include clones
+  const allCards = document.querySelectorAll(".project-card");
+
+  // Set initial position to show the first real card
+  activeCardIndex = 1; // Start at first real card (index 1 because we added clone at beginning)
+
+  return allCards;
+}
+
+const allProjectCards = setupInfiniteCarousel();
+
 let isDragging = false;
 let startPos = 0;
 let currentTranslate = 0;
@@ -46,24 +69,21 @@ let prevTranslate = 0;
 
 // Update carousel position and active card
 function updateCarousel() {
-  const cardWidth = projectCards[0].offsetWidth;
+  const cardWidth = allProjectCards[0].offsetWidth;
   const gap = parseFloat(getComputedStyle(projectsGrid).gap);
   const containerWidth = projectsGrid.parentElement.offsetWidth;
 
-  const activeCard = projectCards[activeCardIndex];
-  const activeCardRect = activeCard.getBoundingClientRect();
-  const activeCardCenter = activeCardRect.left + activeCardRect.width / 2;
+  // Calculate the target position for the active card
+  const targetTranslate =
+    -(activeCardIndex * (cardWidth + gap)) +
+    (containerWidth / 2 - cardWidth / 2);
 
-  const containerRect = projectsGrid.parentElement.getBoundingClientRect();
-  const containerCenter = containerRect.left + containerRect.width / 2;
-
-  const centerDifference = containerCenter - activeCardCenter;
-
-  currentTranslate = currentTranslate + centerDifference;
-
+  // Smooth transition to the target position
+  currentTranslate = targetTranslate;
   projectsGrid.style.transform = `translateX(${currentTranslate}px)`;
 
-  projectCards.forEach((card, index) => {
+  // Update active card styling
+  allProjectCards.forEach((card, index) => {
     if (index === activeCardIndex) {
       card.classList.add("active");
     } else {
@@ -71,8 +91,31 @@ function updateCarousel() {
     }
   });
 
-  prevBtn.disabled = activeCardIndex === 0;
-  nextBtn.disabled = activeCardIndex === projectCards.length - 1;
+  // Handle infinite scroll transitions
+  setTimeout(() => {
+    // If we're at the cloned last card, jump to the real last card
+    if (activeCardIndex === allProjectCards.length - 1) {
+      activeCardIndex = 1; // Jump to first real card
+      projectsGrid.style.transition = "none";
+      updateCarousel();
+      setTimeout(() => {
+        projectsGrid.style.transition = "transform 0.5s ease";
+      }, 10);
+    }
+    // If we're at the cloned first card, jump to the real first card
+    else if (activeCardIndex === 0) {
+      activeCardIndex = allProjectCards.length - 2; // Jump to last real card
+      projectsGrid.style.transition = "none";
+      updateCarousel();
+      setTimeout(() => {
+        projectsGrid.style.transition = "transform 0.5s ease";
+      }, 10);
+    }
+  }, 500); // Wait for transition to complete
+
+  // Ensure buttons are always enabled for infinite scrolling
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
 }
 
 // Initialize carousel
@@ -144,6 +187,13 @@ function dragEnd() {
     }
   });
 
+  // Ensure the index stays within bounds for infinite scrolling
+  if (closestCardIndex < 0) {
+    closestCardIndex = projectCards.length - 1;
+  } else if (closestCardIndex >= projectCards.length) {
+    closestCardIndex = 0;
+  }
+
   activeCardIndex = closestCardIndex;
   updateCarousel();
 }
@@ -156,19 +206,21 @@ function drag(event) {
     event.type === "touchmove" ? event.touches[0].clientX : event.clientX;
   const moveAmount = currentPos - startPos;
 
-  const minTranslate =
-    -(projectCards.length - 1) *
-      (projectCards[0].offsetWidth +
-        parseFloat(getComputedStyle(projectsGrid).gap)) +
-    (projectsGrid.parentElement.offsetWidth / 2 -
-      projectCards[0].offsetWidth / 2);
-  const maxTranslate =
-    projectsGrid.parentElement.offsetWidth / 2 -
-    projectCards[0].offsetWidth / 2;
+  // Remove constraints for infinite scrolling
+  // const minTranslate =
+  //   -(projectCards.length - 1) *
+  //     (projectCards[0].offsetWidth +
+  //       parseFloat(getComputedStyle(projectsGrid).gap)) +
+  //   (projectsGrid.parentElement.offsetWidth / 2 -
+  //     projectCards[0].offsetWidth / 2);
+  // const maxTranslate =
+  //   projectsGrid.parentElement.offsetWidth / 2 -
+  //   projectCards[0].offsetWidth / 2;
 
   currentTranslate = prevTranslate + moveAmount;
-  currentTranslate = Math.max(currentTranslate, minTranslate);
-  currentTranslate = Math.min(currentTranslate, maxTranslate);
+  // Remove min/max constraints for infinite scrolling
+  // currentTranslate = Math.max(currentTranslate, minTranslate);
+  // currentTranslate = Math.min(currentTranslate, maxTranslate);
 
   projectsGrid.style.transform = `translateX(${currentTranslate}px)`;
 }
@@ -177,12 +229,14 @@ function drag(event) {
 // CAROUSEL NAVIGATION BUTTONS
 // ========================================
 prevBtn.addEventListener("click", () => {
-  activeCardIndex = Math.max(activeCardIndex - 1, 0);
+  // Infinite scroll - always go to previous
+  activeCardIndex = activeCardIndex - 1;
   updateCarousel();
 });
 
 nextBtn.addEventListener("click", () => {
-  activeCardIndex = Math.min(activeCardIndex + 1, projectCards.length - 1);
+  // Infinite scroll - always go to next
+  activeCardIndex = activeCardIndex + 1;
   updateCarousel();
 });
 
